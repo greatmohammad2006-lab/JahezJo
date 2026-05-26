@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>جاهز جو | منح تعليمية ومدونة نصائح للطلاب</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 min-h-screen flex flex-col">
+
+    <div id="top-bar" class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white text-xs md:text-sm text-center py-2 px-4 shadow-md flex justify-between items-center font-semibold">
+        <span class="w-full text-center"><i class="fas fa-bullhorn animate-pulse ml-2"></i> أهلاً بك في النسخة المطورة من جاهز جو! تابع أحدث المقالات والمنح الحصرية.</span>
+        <button onclick="document.getElementById('top-bar').remove()" class="text-white opacity-70 hover:opacity-100"><i class="fas fa-times"></i></button>
+    </div>
+
+    <header class="bg-white shadow-sm sticky top-0 z-40 border-b border-gray-100">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 space-x-reverse">
+                <div class="bg-blue-600 text-white p-2.5 rounded-2xl shadow-md shadow-blue-200">
+                    <i class="fas fa-graduation-cap text-2xl"></i>
+                </div>
+                <span class="text-2xl font-black tracking-tight text-slate-900">جاهز <span class="text-blue-600">جو</span></span>
+            </div>
+            
+            <nav class="flex space-x-1 space-x-reverse text-sm font-bold bg-gray-100 p-1 rounded-xl">
+                <button onclick="switchTab('grants')" id="btn-grants" class="px-4 py-2 rounded-lg bg-white text-blue-600 shadow-sm transition-all">المنح الدراسية</button>
+                <button onclick="switchTab('articles')" id="btn-articles" class="px-4 py-2 rounded-lg text-gray-600 hover:text-slate-900 transition-all">المقالات والنصائح</button>
+                <button onclick="switchTab('favs')" id="btn-favs" class="px-4 py-2 rounded-lg text-gray-600 hover:text-slate-900 transition-all"><i class="fas fa-heart text-red-500 ml-1"></i> المفضلة</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+        
+        <div id="section-grants" class="tab-content active">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-bold text-slate-900 flex items-center"><i class="fas fa-paper-plane text-blue-600 ml-2"></i> الفرص والمنح النشطة حالياً</h2>
+            </div>
+            <div id="grants-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </div>
+
+        <div id="section-articles" class="tab-content">
+            <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center"><i class="fas fa-book-open text-indigo-600 ml-2"></i> مدونة وكتابات التوجيه والتعليم</h2>
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </div>
+
+        <div id="section-favs" class="tab-content">
+            <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center"><i class="fas fa-heart text-red-500 ml-2"></i> العناصر التي قمت بحفظها</h2>
+            <div id="favs-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                </div>
+        </div>
+
+        <div id="view-details" class="hidden bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-gray-100 max-w-4xl mx-auto transition-all animate-fade-in">
+            </div>
+
+        <div id="waiting-screen" class="hidden fixed inset-0 bg-slate-950/95 backdrop-blur-md z-50 flex flex-col justify-center items-center text-white px-6">
+            <div class="bg-white/5 p-8 rounded-3xl text-center max-w-xl w-full border border-white/10 shadow-2xl">
+                <div class="w-14 h-14 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+                <h3 class="text-lg font-bold text-blue-400 mb-1">جاري تجهيز رابط التقديم الآمن والفريد...</h3>
+                <p class="text-xs text-gray-400 mb-4">فضلاً انتظر <span class="text-white font-bold text-sm" id="timer-count">12</span> ثانية لفحص الرابط ومطابقته لشروط الأمان.</p>
+                <hr class="border-white/10 my-4">
+                <span class="text-[10px] bg-blue-600/30 text-blue-400 px-3 py-1 rounded-full font-bold tracking-widest uppercase mb-3 inline-block">حكمة اليوم تهمك</span>
+                <div id="wisdom-text" class="text-base font-medium text-gray-100 min-h-[70px] flex items-center justify-center px-4 italic leading-relaxed"></div>
+            </div>
+        </div>
+    </main>
+<div id="admin-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex justify-center items-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center border-b pb-3 mb-4">
+                <h3 class="text-lg font-black text-slate-900 flex items-center"><i class="fas fa-user-shield text-red-600 ml-2"></i> منصة الإدارة لـ (محمد علي)</h3>
+                <button onclick="closeAdmin()" class="text-gray-400 hover:text-gray-600"><i class="fas fa-times text-lg"></i></button>
+            </div>
+            
+            <div class="flex space-x-2 space-x-reverse mb-4 bg-gray-100 p-1 rounded-xl text-xs font-bold">
+                <button onclick="toggleForm('grant')" id="f-btn-grant" class="flex-1 py-2 rounded-lg bg-blue-600 text-white shadow-sm">إضافة فرصة/منحة</button>
+                <button onclick="toggleForm('article')" id="f-btn-article" class="flex-1 py-2 rounded-lg text-gray-600">إضافة مقال جديد</button>
+            </div>
+
+            <form id="form-grant" class="space-y-4" onsubmit="submitGrant(event)">
+                <div><label class="block text-xs font-bold text-gray-600 mb-1">اسم المنحة التعليمية</label><input type="text" id="g-title" class="w-full border p-2.5 rounded-xl text-sm" placeholder="مثال: منحة الحكومة الألمانية DAAD" required></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">الدولة</label><input type="text" id="g-country" class="w-full border p-2.5 rounded-xl text-sm" placeholder="ألمانيا" required></div>
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">التمويل</label><input type="text" id="g-funding" class="w-full border p-2.5 rounded-xl text-sm" placeholder="ممولة بالكامل" required></div>
+                </div>
+                <div><label class="block text-xs font-bold text-gray-600 mb-1">رابط التقديم المباشر</label><input type="url" id="g-link" class="w-full border p-2.5 rounded-xl text-sm text-left" placeholder="https://..." required></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">تاريخ الانتهاء</label><input type="date" id="g-date" class="w-full border p-2.5 rounded-xl text-sm" required></div>
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">صورة الفرصة (من الجهاز)</label><input type="file" id="g-img" accept="image/*" class="w-full text-xs mt-1" required></div>
+                </div>
+                <div><label class="block text-xs font-bold text-gray-600 mb-1">شرح وتفاصيل المتطلبات</label><textarea id="g-desc" rows="3" class="w-full border p-2.5 rounded-xl text-sm" placeholder="اكتب الشروط والامتيازات..." required></textarea></div>
+                <button type="submit" id="g-submit-btn" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold shadow-md hover:bg-blue-700 transition-all">[ نشر الفرصة فوراً وتحديث الموقع 🚀 ]</button>
+            </form>
+
+            <form id="form-article" class="space-y-4 hidden" onsubmit="submitArticle(event)">
+                <div><label class="block text-xs font-bold text-gray-600 mb-1">عنوان المقال</label><input type="text" id="a-title" class="w-full border p-2.5 rounded-xl text-sm" placeholder="كيف تختار التخصص الجامعي المناسب؟" required></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">اسم الناشر</label><input type="text" id="a-author" class="w-full border p-2.5 rounded-xl text-sm" placeholder="محمد علي" required></div>
+                    <div><label class="block text-xs font-bold text-gray-600 mb-1">صورة المقال (من الجهاز)</label><input type="file" id="a-img" accept="image/*" class="w-full text-xs mt-1" required></div>
+                </div>
+                <div><label class="block text-xs font-bold text-gray-600 mb-1">محتوى المقال بالكامل</label><textarea id="a-content" rows="5" class="w-full border p-2.5 rounded-xl text-sm" placeholder="اكتب نص مقالك الاحترافي والمفيد هنا..." required></textarea></div>
+                <button type="submit" id="a-submit-btn" class="w-full bg-indigo-600 text-white py-2.5 rounded-xl font-bold shadow-md hover:bg-indigo-700 transition-all">[ نشر المقال فوراً وتحديث الموقع 🚀 ]</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-auto select-none">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <p class="text-sm">© 2026 جميع الحقوق محفوظة لمنصة <span class="text-white font-bold">جاهز جو</span>.</p>
+            <p id="footer-trigger" class="text-xs text-slate-600 mt-3 cursor-pointer transition-colors hover:text-slate-500">تم التطوير بكل حب لأجل الطلاب والباحثين عن الفرص</p>
+        </div>
+    </footer>
+<script>
+        // تكوين إعدادات الربط مع مخزن الحساب الخاص بك
+        const GITHUB_USERNAME = "greatmohammad2006-lab";
+        const GITHUB_REPO = "jahezjo-platform";
+        const GITHUB_TOKEN = "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";
+        const ADMIN_PASS = "M7md@3li";
+
+        // قاعدة البيانات الافتراضية الأولية للموقع في حال كان المستودع فارغاً
+        let db = { grants: [], articles: [] };
+        let bookmarks = JSON.parse(localStorage.getItem('jahezjo_favs')) || [];
+
+        // الـ 50 حكمة العربية الملهمة المختارة بعناية لمنع الملل أثناء عداد الانتظار
+        const wisdoms = [
+            "النجاح ليس بمقدار ما تنجز، بل بمقدار التحديات التي تتغلب عليها.",
+            "التعليم هو أقوى سلاح يمكنك استخدامه لتغيير العالم.",
+            "من فتح مدرسة أقفل سجناً.",
+            "الرحلة التي تستغرق ألف ميل تبدأ بخطوة واحدة صامدة.",
+            "طلب العلم فريضة على كل إنسان يطمح لبناء مستقبل حقيقي.",
+            "كل إناء يضيق بما جعل فيه إلا إناء العلم فإنه يتسع.",
+            "الفرص لا تأتي بالصدفة، بل نحن من نصنعها بالجد والعمل.",
+            "النجاح رحلة مستمرة وليس محطة وصول نهائية.",
+            "الوقت هو العملة الأغلى، فاستثمره في بناء مهاراتك الشخصية.",
+            "ليس العيب أن تسقط، بل العيب أن ترفض النهوض مرة أخرى.",
+            "الاستثمار في المعرفة يحقق دائماً أفضل العوائد المالية والنهضوية.",
+            "السر في المضي قدماً هو البدء فوراً دون تسويف أو تأجيل.",
+            "الشخص الذي لم يخطئ أبداً لم يجرب أي شيء جديد في حياته.",
+            "أفضل طريقة للتنبؤ بالمستقبل هي أن تصنعه وتصيغه بيديك اليوم.",
+            "العلم في الصغر كالنقش على الحجر لا يمحوه الزمن أو المشاغل.",
+            "التحديات هي ما يجعل الحياة مثيرة، والتغلب عليها يجعلها ذات معنى.",
+            "الفشل هو ببساطة فرصة للبدء مرة أخرى ولكن بذكاء أكبر وأعمق.",
+            "الذكاء ليس عدم ارتكاب الأخطاء، بل التعلم منها لعدم تكرارها.",
+            "الإرادة القوية تقصر المسافات البعيدة وتذلل المصاعب الجسيمة.",
+            "لا تنتظر الظروف المثالية، خذ الظرف الحالي واجعله مثالياً بعزمك.",
+            "المعرفة قوة، ومشاركتها مع الآخرين هي قمة العطاء الإنساني.",
+            "الأبطال لا يُصنعون في الصالات، بل يُصنعون من أشياء عميقة في داخلهم.",
+            "سر النجاح هو الثبات التام على الهدف دون الالتفات للمشتتات.",
+            "الطموح هو الوقود الذي يدفع العقل البشري لتجاوز المستحيل.",
+            "العمل الجاد يتغلب على الموهبة عندما لا تعمل الموهبة بجد.",
+            "عش كأنك تموت غداً، وتعلم كأنك ستعيش أبداً وبلا نهاية.",
+            "العقبات هي تلك الأشياء المخيفة التي تراها عندما ترفع عينك عن هدفك.",
+            "التعليم لا يملأ الوعاء، بل يشعل الشعلة وينير البصيرة الدفينة.",
+            "من أراد النجاح في هذا العالم عليه أن يتغلب على أسس الخوف والتردد.",
+            "لا تقيس نجاحك بما حققه الآخرون، بل بما كنت قادرًا على تحقيقه.",
+            "القراءة تصنع إنساناً كاملاً، والنقاش يصنع إنساناً مستعداً للفرص.",
+            "الحياة قصيرة جداً لتضييعها في التردد، اتخذ قرارك واجتهد له.",
+            "بين الحلم والواقع هناك خطوة واحدة تسمى: الإصرار والبدء العملي.",
+            "الذين يغيرون العالم هم الذين يعتقدون أنهم قادرون على ذلك حقاً.",
+            "التميز ليس عملاً عابراً، بل هو عادة يومية وأسلوب حياة متكامل.",
+            "اجعل من خيبات الأمس درساً لنجاحات اليوم وبناء منجزات الغد.",
+            "كن دائماً النسخة الأولى من نفسك، ولا تكن النسخة الثانية من غيرك.",
+            "النجاح الحقيقي هو أن تشعر بالفخر الداخلي بما أنجزته بعرق جبينك.",
+            "الأفكار العظيمة تحتاج إلى أقدام تسعى بها على أرض الواقع لتكبر.",
+            "لا تحلم بالنجاح بل استيقظ باهراً واعمل بجد وتفاني لتحقيقه والوصول.",
+            "القدرة على التعلم الذاتي هي المهارة الأهم في هذا العصر المتسارع.",
+            "الصبر والتأني والجهد المتواصل هم الثلاثية الذهبية لصناعة التميز.",
+            "كل فكرة عظيمة كانت في البداية تبدو مستحيلة بنظر العاجزين.",
+            "ابدأ من حيث أنت، واستخدم ما لديك، وافعل ما تستطيع فعله الآن.",
+            "العلم بلا عمل كالشجر بلا ثمر، لا يستفاد من ظله أو وجوده.",
+            "المثابرة هي الكلمة السحرية التي تحول الفشل المستمر إلى نجاح مبهر.",
+            "لا تخف من التغيير، بل خف من البقاء في نفس المكان طوال حياتك.",
+            "اجعل شغفك هو دليلك، وثق بأن مجهودك لن يضيع سدى أبداً.",
+            "التعلم المستمر هو سر الشباب الدائم لعقلك وفكرك وطموحاتك.",
+            "من لم يذق مر التعلم ساعة، تجرع ذل الجهل طول حياته وعمره."
+        ];
+
+        // تهيئة تشغيل الموقع وقراءة البيانات من الحساب السحابي فوراً
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchDatabase();
+            setupAdminTrigger();
+        });
+
+        // جلب ملف البيانات json من GitHub
+        async function fetchDatabase() {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/data.json`, {
+                    headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                });
+                if(res.ok) {
+                    const fileData = await res.json();
+                    const content = decodeURIComponent(atob(fileData.content).split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+                    db = JSON.parse(content);
+                }
+            } catch(e) { console.log("البدء بقاعدة بيانات أولية فارغة."); }
+            renderData();
+        }
+
+        // حفظ وتحديث ملف البيانات السحابي على جيتهب تلقائياً عند أي إضافة جديدة لـ Netlify
+        async function saveDatabaseToGitHub() {
+            const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/data.json`;
+            let sha = "";
+            try {
+                const checkRes = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+                if(checkRes.ok) { const d = await checkRes.json(); sha = d.sha; }
+            } catch(e){}
+
+            const jsonStr = JSON.stringify(db, null, 2);
+            const base64Content = btoa(unescape(encodeURIComponent(jsonStr)));
+            
+            const bodyData = { message: "Update site data dynamic", content: base64Content };
+            if(sha) bodyData.sha = sha;
+
+            const res = await fetch(url, {
+                method: 'PUT',
+                headers: { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify(bodyData)
+            });
+            return res.ok;
+        }
+
+        // نظام رفع وتحويل الصور مباشرة من داخل الجهاز عبر نظام base64 السحابي المضمن لتوفير سحابة مجانية سريعة
+        function processImage(fileInput) {
+            return new Promise((resolve) => {
+                const file = fileInput.files[0];
+                if(!file) return resolve('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500');
+                const reader = new FileReader();
+                reader.onloadend = function() { resolve(reader.result); };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // نظام التبويب والتنقل السلس بالموقع
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.getElementById('view-details').classList.add('hidden');
+            
+            document.getElementById(`section-${tab}`).classList.add('active');
+            
+            document.querySelectorAll('nav button').forEach(b => b.className = "px-4 py-2 rounded-lg text-gray-600 hover:text-slate-900 transition-all");
+            document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg bg-white text-blue-600 shadow-sm transition-all";
+            if(tab === 'favs') renderFavs();
+        }
+
+        // عرض كروت المنح والمقالات في الصفحات
+        function renderData() {
+            const grantsGrid = document.getElementById('grants-grid');
+            grantsGrid.innerHTML = db.grants.length ? '' : '<div class="col-span-full text-center text-gray-400 py-8">لا يوجد منح منشورة حالياً.</div>';
+            
+            db.grants.forEach((g, idx) => {
+                const deadline = new Date(g.deadline);
+                const diffTime = deadline - new Date();
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const isFav = bookmarks.some(b => b.type === 'grant' && b.id === idx);
+
+                grantsGrid.innerHTML += `
+                    <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col">
+                        <img src="${g.image}" class="w-full h-48 object-cover" alt="">
+                        <div class="p-5 flex-grow flex flex-col">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2.5 py-1 rounded-md"><i class="fas fa-map-marker-alt ml-1"></i>${g.country}</span>
+                                <span class="bg-emerald-50 text-emerald-600 text-[11px] font-bold px-2.5 py-1 rounded-md">${g.funding}</span>
+                            </div>
+                            <h3 class="font-bold text-slate-900 text-base mb-2">${g.title}</h3>
+                            <p class="text-xs text-gray-500 line-clamp-3 mb-4">${g.desc}</p>
+                            <div class="mt-auto pt-3 border-t border-gray-50 flex justify-between items-center">
+                                <span class="text-xs font-semibold ${diffDays > 0 ? 'text-orange-600':'text-red-500'}">
+                                    <i class="far fa-clock ml-1"></i>${diffDays > 0 ? `متبقي ${diffDays} يوم` : 'منتهية التقديم'}
+                                </span>
+                                <div class="flex space-x-2 space-x-reverse">
+                                    <button onclick="toggleFav('grant', ${idx})" class="p-2 text-sm rounded-lg border border-gray-100 hover:bg-gray-50"><i class="${isFav ? 'fas text-red-500' : 'far'} fa-heart"></i></button>
+                                    <button onclick="viewItem('grant', ${idx})" class="bg-slate-900 text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-slate-800">التفاصيل</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const articlesGrid = document.getElementById('articles-grid');
+            articlesGrid.innerHTML = db.articles.length ? '' : '<div class="col-span-full text-center text-gray-400 py-8">لا يوجد مقالات منشورة حالياً.</div>';
+            
+            db.articles.forEach((a, idx) => {
+                const isFav = bookmarks.some(b => b.type === 'article' && b.id === idx);
+                articlesGrid.innerHTML += `
+                    <div class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col">
+                        <img src="${a.image}" class="w-full h-44 object-cover" alt="">
+                        <div class="p-5 flex-grow flex flex-col">
+                            <h3 class="font-bold text-slate-900 text-base mb-2">${a.title}</h3>
+                            <p class="text-xs text-gray-500 line-clamp-3 mb-4">${a.content}</p>
+                            <div class="mt-auto pt-3 border-t border-gray-50 flex justify-between items-center text-xs text-gray-400">
+                                <span><i class="far fa-user ml-1"></i>${a.author}</span>
+                                <div class="flex space-x-2 space-x-reverse items-center">
+                                    <button onclick="toggleFav('article', ${idx})" class="p-2 rounded-lg hover:bg-gray-50 text-sm"><i class="${isFav ? 'fas text-red-500' : 'far'} fa-heart"></i></button>
+                                    <button onclick="viewItem('article', ${idx})" class="text-blue-600 font-bold hover:underline">اقرأ المقال</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // عرض صفحة المقال أو المنحة بكامل تفاصيلها مع مساحات إعلانات جوجل أدسنس الذكية
+        function viewItem(type, id) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            const container = document.getElementById('view-details');
+            container.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if(type === 'grant') {
+                const g = db.grants[id];
+                container.innerHTML = `
+                    <button onclick="switchTab('grants')" class="text-sm font-bold text-blue-600 mb-4 inline-block"><i class="fas fa-arrow-right ml-1"></i> العودة للمنح</button>
+                    <img src="${g.image}" class="w-full h-64 md:h-80 object-cover rounded-2xl mb-6 shadow-sm" alt="">
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-3">${g.title}</h2>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-blue-50 text-blue-600 text-xs font-bold px-3 py-1.5 rounded-lg"><i class="fas fa-map-marker-alt ml-1"></i>دولة الفرصة: ${g.country}</span>
+                        <span class="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1.5 rounded-lg"><i class="fas fa-money-bill-wave ml-1"></i>التمويل: ${g.funding}</span>
+                        <span class="bg-orange-50 text-orange-600 text-xs font-bold px-3 py-1.5 rounded-lg"><i class="far fa-calendar-alt ml-1"></i>آخر موعد: ${g.deadline}</span>
+                    </div>
+                    <div class="prose max-w-none text-slate-700 whitespace-pre-line leading-relaxed text-sm md:text-base mb-8">${g.desc}</div>
+                    
+                    <div class="my-6 bg-gray-50 border border-dashed border-gray-200 text-gray-400 p-4 text-center text-xs rounded-xl font-mono">
+                        <p class="font-sans font-bold text-[10px] text-gray-400 mb-1">إعلان مفضل ومقترح من GOOGLE ADSENSE</p>
+                        [مساحة إعلانية مخصصة تظهر تلقائياً للزوار وتحقق لك الأرباح]
+                    </div>
+
+                    <button onclick="startWaiting('${g.link}')" class="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-black shadow-lg text-center text-base hover:bg-blue-700 transition-all block">الذهاب إلى صفحة التقديم الرسمية الآن <i class="fas fa-external-link-alt mr-1 text-sm"></i></button>
+                `;
+            } else {
+                const a = db.articles[id];
+                container.innerHTML = `
+                    <button onclick="switchTab('articles')" class="text-sm font-bold text-blue-600 mb-4 inline-block"><i class="fas fa-arrow-right ml-1"></i> العودة للمقالات</button>
+                    <h2 class="text-2xl font-extrabold text-slate-900 mb-2">${a.title}</h2>
+                    <div class="flex items-center space-x-3 space-x-reverse text-xs text-gray-400 mb-5">
+                        <span><i class="far fa-user ml-1"></i>الناشر: ${a.author}</span>
+                        <span>•</span>
+                        <span><i class="far fa-clock ml-1"></i>تاريخ النشر: ${a.date}</span>
+                    </div>
+                    <img src="${a.image}" class="w-full h-60 md:h-72 object-cover rounded-2xl mb-6" alt="">
+                    
+                    <div class="my-4 bg-gray-50 border border-dashed border-gray-200 text-gray-400 p-4 text-center text-xs rounded-xl font-mono">[إعلان أدسنس - أسفل العنوان الرئيسي ومقدمة المقال]</div>
+
+                    <div class="prose max-w-none text-slate-700 whitespace-pre-line leading-relaxed text-sm md:text-base mb-6">${a.content}</div>
+                    
+                    <div class="my-4 bg-gray-50 border border-dashed border-gray-200 text-gray-400 p-4 text-center text-xs rounded-xl font-mono">[إعلان أدسنس - نهاية المقال والصفحة التدريبية]</div>
+                `;
+            }
+        }
+
+        // نظام شاشة الانتظار الفريد مع تدوير الـ 50 حكمة تلقائياً كل 4 ثوانٍ
+        function startWaiting(targetUrl) {
+            const screen = document.getElementById('waiting-screen');
+            const timerCount = document.getElementById('timer-count');
+            const wisdomText = document.getElementById('wisdom-text');
+            
+            let seconds = 12;
+            timerCount.innerText = seconds;
+            
+            const changeWisdom = () => {
+                const randomIdx = Math.floor(Math.random() * wisdoms.length);
+                wisdomText.innerText = `"${wisdoms[randomIdx]}"`;
+            };
+            
+            changeWisdom();
+            const wisdomInterval = setInterval(changeWisdom, 4000);
+            screen.classList.remove('hidden');
+
+            const interval = setInterval(() => {
+                seconds--;
+                timerCount.innerText = seconds;
+                if(seconds <= 0) {
+                    clearInterval(interval);
+                    clearInterval(wisdomInterval);
+                    screen.classList.add('hidden');
+                    window.open(targetUrl, '_blank');
+                }
+            }, 1000);
+        }
+
+        // نظام المفضلة الذكي (Bookmarks)
+        function toggleFav(type, id) {
+            const index = bookmarks.findIndex(b => b.type === type && b.id === id);
+            if(index > -1) bookmarks.splice(index, 1);
+            else bookmarks.push({ type, id });
+            localStorage.setItem('jahezjo_favs', JSON.stringify(bookmarks));
+            renderData();
+        }
+
+        function renderFavs() {
+            const grid = document.getElementById('favs-grid');
+            grid.innerHTML = '';
+            if(!bookmarks.length) { grid.innerHTML = '<div class="col-span-full text-center text-gray-400 py-8">لم تقم بحفظ أي عنصر بعد.</div>'; return; }
+            
+            bookmarks.forEach(b => {
+                if(b.type === 'grant' && db.grants[b.id]) {
+                    const g = db.grants[b.id];
+                    grid.innerHTML += `
+                        <div class="bg-white rounded-xl p-4 border flex items-center justify-between shadow-sm">
+                            <div><h4 class="font-bold text-xs text-slate-900">${g.title}</h4><span class="text-[10px] text-blue-500 font-bold">${g.country}</span></div>
+                            <button onclick="viewItem('grant', ${b.id})" class="text-xs bg-slate-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg font-bold">عرض</button>
+                        </div>
+                    `;
+                } else if(b.type === 'article' && db.articles[b.id]) {
+                    const a = db.articles[b.id];
+                    grid.innerHTML += `
+                        <div class="bg-white rounded-xl p-4 border flex items-center justify-between shadow-sm">
+                            <div><h4 class="font-bold text-xs text-slate-900">${a.title}</h4><span class="text-[10px] text-gray-400">بقلم: ${a.author}</span></div>
+                            <button onclick="viewItem('article', ${b.id})" class="text-xs bg-slate-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg font-bold">عرض</button>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // إدارة لوحة الأدمن السرية (نقر مطول بالأسفل لتفعيلها)
+        function setupAdminTrigger() {
+            const trigger = document.getElementById('footer-trigger');
+            let timer;
+            trigger.addEventListener('mousedown', () => timer = setTimeout(openAdmin, 2500));
+            trigger.addEventListener('touchstart', () => timer = setTimeout(openAdmin, 2500));
+            trigger.addEventListener('mouseup', () => clearTimeout(timer));
+            trigger.addEventListener('touchend', () => clearTimeout(timer));
+        }
+
+        function openAdmin() {
+            const pass = prompt("الرجاء إدخال الرمز السري الماستر لفتح الإدارة:");
+            if(pass === ADMIN_PASS) document.getElementById('admin-modal').classList.remove('hidden');
+            else if(pass !== null) alert("عذراً، كلمة المرور خاطئة تماماً ومحمية!");
+        }
+
+        function closeAdmin() { document.getElementById('admin-modal').classList.add('hidden'); }
+        function toggleForm(type) {
+            document.getElementById('form-grant').classList.toggle('hidden', type !== 'grant');
+            document.getElementById('form-article').classList.toggle('hidden', type !== 'article');
+            document.getElementById('f-btn-grant').className = type === 'grant' ? 'flex-1 py-2 rounded-lg bg-blue-600 text-white shadow-sm' : 'flex-1 py-2 rounded-lg text-gray-600';
+            document.getElementById('f-btn-article').className = type === 'article' ? 'flex-1 py-2 rounded-lg bg-indigo-600 text-white shadow-sm' : 'flex-1 py-2 rounded-lg text-gray-600';
+        }
+
+        // إرسال فرصة/منحة جديدة وحفظها سحابياً
+        async function submitGrant(e) {
+            e.preventDefault();
+            const btn = document.getElementById('g-submit-btn');
+            btn.innerText = "جاري رفع الصورة والبيانات لـ GitHub...";
+            btn.disabled = true;
+
+            const imageBase64 = await processImage(document.getElementById('g-img'));
+            const newGrant = {
+                title: document.getElementById('g-title').value,
+                country: document.getElementById('g-country').value,
+                funding: document.getElementById('g-funding').value,
+                link: document.getElementById('g-link').value,
+                deadline: document.getElementById('g-date').value,
+                desc: document.getElementById('g-desc').value,
+                image: imageBase64
+            };
+
+            db.grants.unshift(newGrant);
+            const success = await saveDatabaseToGitHub();
+            if(success) {
+                alert("🎉 تم نشر وتحديث المنحة بنجاح! سيقوم نيتليفاي بتحديث الموقع فوراً للزوار.");
+                document.getElementById('scholarship-form').reset();
+                closeAdmin();
+                renderData();
+            } else { alert("❌ فشل الاتصال بالسيرفر، تأكد من مفتاح الربط."); }
+            btn.innerText = "[ نشر الفرصة فوراً وتحديث الموقع 🚀 ]"; btn.disabled = false;
+        }
+
+        // إرسال مقال جديد وحفظه سحابياً
+        async function submitArticle(e) {
+            e.preventDefault();
+            const btn = document.getElementById('a-submit-btn');
+            btn.innerText = "جاري معالجة المقال ونشره...";
+            btn.disabled = true;
+
+            const imageBase64 = await processImage(document.getElementById('a-img'));
+            const dateStr = new Date().toLocaleDateString('ar-JO', { year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+            
+            const newArticle = {
+                title: document.getElementById('a-title').value,
+                author: document.getElementById('a-author').value,
+                content: document.getElementById('a-content').value,
+                image: imageBase64,
+                date: dateStr
+            };
+
+            db.articles.unshift(newArticle);
+            const success = await saveDatabaseToGitHub();
+            if(success) {
+                alert("🎉 تم نشر وتحديث المقال التعليمي بنجاح على منصة جاهز جو!");
+                document.getElementById('article-form').reset();
+                closeAdmin();
+                renderData();
+            } else { alert("❌ فشل نشر المقال، يرجى مراجعة الصلاحيات."); }
+            btn.innerText = "[ نشر المقال فوراً وتحديث الموقع 🚀 ]"; btn.disabled = false;
+        }
+    </script>
+</body>
+</html>
