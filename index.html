@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>جاهز جو | منصة المنح والفرص الأكاديمية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { cairo: ['Cairo', 'sans-serif'] },
+      colors: {
+        primary: { 50:'#f0f4ff',100:'#e0e9ff',200:'#c7d7fe',300:'#a5b4fc',400:'#818cf8',500:'#6366f1',600:'#4f46e5',700:'#4338ca',800:'#3730a3',900:'#312e81' },
+        gold: { 400:'#fbbf24',500:'#f59e0b',600:'#d97706' },
+        dark: { 900:'#06071a',800:'#0d1033',700:'#141840',600:'#1c2254' }
+      }
+    }
+  }
+}
+</script>
+<style>
+*{font-family:'Cairo',sans-serif;box-sizing:border-box}
+:root{
+  --glass-bg:rgba(255,255,255,0.08);
+  --glass-border:rgba(255,255,255,0.15);
+  --glass-shadow:0 8px 32px rgba(0,0,0,0.37);
+  --gold:#f0b429;
+  --indigo:#6366f1;
+  --dark:#06071a;
+}
+body{background:#06071a;color:#e2e8f0;overflow-x:hidden;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 20%,rgba(99,102,241,0.15) 0%,transparent 50%),radial-gradient(ellipse at 80% 80%,rgba(240,180,41,0.08) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+/* GLASSMORPHISM */
+.glass{background:var(--glass-bg);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow)}
+.glass-dark{background:rgba(6,7,26,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08)}
+.glass-card{background:rgba(255,255,255,0.05);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);transition:all 0.3s ease}
+.glass-card:hover{background:rgba(255,255,255,0.09);border-color:rgba(240,180,41,0.3);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 30px rgba(240,180,41,0.08)}
+
+/* TICKER */
+@keyframes ticker{0%{transform:translateX(-100%)}100%{transform:translateX(100vw)}}
+.ticker-wrap{overflow:hidden;white-space:nowrap}
+.ticker-text{display:inline-block;animation:ticker 25s linear infinite}
+
+/* PULSE HEART */
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+.heart-beat{animation:heartbeat 0.4s ease}
+
+/* READING PROGRESS */
+#reading-progress{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,#6366f1,#f0b429);z-index:9999;transition:width 0.1s ease}
+
+/* COUNTDOWN URGENT */
+.urgent-countdown{color:#ef4444;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+
+/* FADE TRANSITIONS */
+.fade-in{animation:fadeIn 0.5s ease forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* SPINNING PROGRESS */
+@keyframes spin-progress{0%{stroke-dashoffset:283}100%{stroke-dashoffset:0}}
+.progress-ring-fill{stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 0.1s linear;transform:rotate(-90deg);transform-origin:50% 50%}
+
+/* ADMIN PULSE */
+@keyframes adminPulse{0%,100%{box-shadow:0 0 0 0 rgba(240,180,41,0.4)}70%{box-shadow:0 0 0 10px rgba(240,180,41,0)}}
+
+/* GRADIENT BUTTON */
+.btn-gold{background:linear-gradient(135deg,#f0b429,#f59e0b);color:#06071a;font-weight:700;transition:all 0.3s ease}
+.btn-gold:hover{background:linear-gradient(135deg,#fbbf24,#f0b429);transform:translateY(-2px);box-shadow:0 8px 25px rgba(240,180,41,0.4)}
+.btn-primary{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff;font-weight:700;transition:all 0.3s ease}
+.btn-primary:hover{background:linear-gradient(135deg,#818cf8,#6366f1);transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,0.4)}
+
+/* TABS */
+.tab-btn{position:relative;transition:all 0.3s ease}
+.tab-btn.active{color:#f0b429}
+.tab-btn.active::after{content:'';position:absolute;bottom:-2px;right:0;left:0;height:3px;background:linear-gradient(90deg,#6366f1,#f0b429);border-radius:2px}
+
+/* WISDOM TEXT */
+@keyframes wisdomFade{0%{opacity:0;transform:translateY(8px)}20%,80%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-8px)}}
+.wisdom-text{animation:wisdomFade 4s ease infinite}
+
+/* HORIZONTAL PROGRESS BAR */
+@keyframes progressFill{0%{width:0%}100%{width:100%}}
+.app-progress-bar{animation:progressFill 12s linear forwards}
+
+/* STAR PARTICLES */
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(180deg)}}
+.particle{position:absolute;border-radius:50%;opacity:0.3;animation:float linear infinite}
+
+/* TAGS */
+.tag{display:inline-flex;align-items:center;padding:2px 10px;border-radius:9999px;font-size:0.7rem;font-weight:600}
+.tag-full{background:rgba(34,197,94,0.2);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.tag-partial{background:rgba(251,191,36,0.2);color:#fbbf24;border:1px solid rgba(251,191,36,0.3)}
+.tag-country{background:rgba(99,102,241,0.2);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3)}
+.tag-blog{background:rgba(236,72,153,0.2);color:#f9a8d4;border:1px solid rgba(236,72,153,0.3)}
+
+/* ADSENSE PLACEHOLDER */
+.adsense-placeholder{border:2px dashed rgba(255,255,255,0.2);background:rgba(255,255,255,0.03);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;gap:8px}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.05)}
+::-webkit-scrollbar-thumb{background:rgba(99,102,241,0.5);border-radius:3px}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(6,7,26,0.85);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto}
+.modal-box{background:#0d1033;border:1px solid rgba(255,255,255,0.1);border-radius:20px;width:100%;max-width:800px;margin:auto;animation:fadeIn 0.3s ease}
+
+/* APP GATEWAY */
+#app-gateway{position:fixed;inset:0;background:#06071a;z-index:9000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+
+/* SEARCH */
+.search-input{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:50px;padding:14px 24px;width:100%;color:#e2e8f0;font-size:1rem;transition:all 0.3s ease;outline:none}
+.search-input:focus{border-color:rgba(240,180,41,0.5);background:rgba(255,255,255,0.1);box-shadow:0 0 0 3px rgba(240,180,41,0.1)}
+.search-input::placeholder{color:rgba(255,255,255,0.35)}
+
+/* HIDDEN */
+.hidden{display:none!important}
+.invisible{visibility:hidden}
+
+/* TOOLTIP */
+[data-tooltip]{position:relative}
+[data-tooltip]:hover::after{content:attr(data-tooltip);position:absolute;bottom:110%;right:50%;transform:translateX(50%);background:#1c2254;color:#e2e8f0;padding:6px 12px;border-radius:8px;font-size:0.75rem;white-space:nowrap;pointer-events:none;z-index:100}
+
+/* ====== WELCOME SCREEN ====== */
+#welcome-screen{
+  position:fixed;inset:0;background:#06071a;z-index:8000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:24px;
+  overflow:hidden;
+}
+#welcome-screen::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 40%,rgba(99,102,241,0.25) 0%,transparent 55%),
+             radial-gradient(ellipse at 75% 70%,rgba(240,180,41,0.15) 0%,transparent 50%);
+  pointer-events:none;
+}
+.welcome-stars{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.welcome-star{position:absolute;border-radius:50%;background:#fff;opacity:0}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(0.5)}50%{opacity:0.6;transform:scale(1)}}
+
+.welcome-logo-wrap{
+  position:relative;margin-bottom:32px;
+}
+.welcome-logo-ring{
+  width:110px;height:110px;border-radius:50%;
+  background:linear-gradient(135deg,#f0b429,#6366f1);
+  padding:3px;animation:logoSpin 8s linear infinite;
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+@keyframes logoSpin{from{filter:hue-rotate(0deg)}to{filter:hue-rotate(360deg)}}
+.welcome-logo-inner{
+  width:100%;height:100%;border-radius:50%;background:#06071a;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.8rem;font-weight:900;
+  background:linear-gradient(135deg,#0d1033,#06071a);
+}
+.welcome-logo-placeholder{width:110px;height:110px}
+
+.welcome-title-wrap{text-align:center;margin-bottom:8px}
+.welcome-title{font-size:2.6rem;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-0.5px}
+.welcome-title span{color:transparent;background:linear-gradient(90deg,#f0b429,#a5b4fc);-webkit-background-clip:text;background-clip:text}
+.welcome-sub{color:rgba(255,255,255,0.5);font-size:1rem;text-align:center;margin-bottom:40px;font-weight:500;line-height:1.6}
+
+.welcome-btns{display:flex;flex-direction:column;gap:18px;width:100%;max-width:420px;margin-bottom:28px}
+@media(min-width:540px){.welcome-btns{flex-direction:row;max-width:700px}}
+
+.welcome-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:10px;padding:28px 24px;border-radius:24px;cursor:pointer;
+  border:none;font-family:'Cairo',sans-serif;font-weight:800;
+  transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;overflow:hidden;
+}
+.welcome-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.12),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.welcome-btn:hover::after{opacity:1}
+.welcome-btn:hover{transform:translateY(-6px) scale(1.03)}
+.welcome-btn:active{transform:scale(0.97)}
+
+.welcome-btn-articles{
+  background:linear-gradient(135deg,#312e81 0%,#4f46e5 50%,#6366f1 100%);
+  color:#fff;
+  box-shadow:0 8px 40px rgba(99,102,241,0.45);
+  border:1px solid rgba(99,102,241,0.5);
+}
+.welcome-btn-articles:hover{box-shadow:0 16px 50px rgba(99,102,241,0.65)}
+
+.welcome-btn-scholarships{
+  background:linear-gradient(135deg,#78350f 0%,#d97706 50%,#f0b429 100%);
+  color:#06071a;
+  box-shadow:0 8px 40px rgba(240,180,41,0.4);
+  border:1px solid rgba(240,180,41,0.5);
+}
+.welcome-btn-scholarships:hover{box-shadow:0 16px 50px rgba(240,180,41,0.6)}
+
+.welcome-btn-icon{font-size:2.5rem;line-height:1;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3))}
+.welcome-btn-label{font-size:1.15rem;font-weight:900;white-space:nowrap}
+.welcome-btn-desc{font-size:0.75rem;font-weight:500;opacity:0.75;text-align:center;line-height:1.4}
+
+.welcome-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  border-radius:9999px;padding:6px 16px;
+  font-size:0.75rem;color:rgba(255,255,255,0.45);font-weight:600;
+}
+
+@keyframes welcomeFadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+.welcome-anim-1{animation:welcomeFadeIn 0.7s ease 0.1s both}
+.welcome-anim-2{animation:welcomeFadeIn 0.7s ease 0.25s both}
+.welcome-anim-3{animation:welcomeFadeIn 0.7s ease 0.4s both}
+.welcome-anim-4{animation:welcomeFadeIn 0.7s ease 0.55s both}
+
+@keyframes welcomeFadeOut{from{opacity:1;transform:scale(1)}to{opacity:0;transform:scale(1.04)}}
+.welcome-exit{animation:welcomeFadeOut 0.4s ease forwards}
+
+/* CONTENT FADE-IN on show */
+@keyframes contentReveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.content-reveal{animation:contentReveal 0.5s ease forwards}
+
+/* NAV HOME BTN */
+.nav-home-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:7px 16px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(240,180,41,0.15),rgba(99,102,241,0.15));
+  border:1px solid rgba(240,180,41,0.35);
+  color:#f0b429;font-size:0.8rem;font-weight:700;
+  cursor:pointer;transition:all 0.25s ease;
+}
+.nav-home-btn:hover{background:linear-gradient(135deg,rgba(240,180,41,0.25),rgba(99,102,241,0.25));transform:translateY(-1px)}
+
+/* FOOTER COPY SECRET INTERACTION */
+#footer-copy{
+  cursor:default;user-select:none;
+  transition:color 0.2s ease;
+}
+#footer-copy.tap-hint{color:rgba(240,180,41,0.5)!important}
+</style>
+</head>
+<body class="font-cairo">
+<div id="reading-progress"></div>
+
+<!-- ====== WELCOME SCREEN ====== -->
+<div id="welcome-screen">
+  <!-- Twinkling stars bg -->
+  <div class="welcome-stars" id="welcome-stars"></div>
+
+  <!-- Logo -->
+  <div class="welcome-logo-wrap welcome-anim-1" style="position:relative;width:110px;height:110px;margin-bottom:32px">
+    <div class="welcome-logo-ring"></div>
+    <div class="welcome-logo-inner" style="position:absolute;top:3px;left:3px;right:3px;bottom:3px;border-radius:50%;background:linear-gradient(135deg,#0d1033,#06071a);display:flex;align-items:center;justify-content:center;font-size:2.8rem">🎓</div>
+  </div>
+
+  <!-- Title -->
+  <div class="welcome-title-wrap welcome-anim-2">
+    <h1 class="welcome-title">جاهز <span>جو</span></h1>
+    <p class="welcome-sub">وجهتك الأولى للمنح الدراسية<br/>والفرص الأكاديمية حول العالم</p>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="welcome-btns welcome-anim-3">
+    <button class="welcome-btn welcome-btn-articles" onclick="enterSection('blog')">
+      <span class="welcome-btn-icon">📄</span>
+      <span class="welcome-btn-label">مقالات وأخبار</span>
+      <span class="welcome-btn-desc">نصائح، توجيه أكاديمي<br/>وأحدث الأخبار</span>
+    </button>
+    <button class="welcome-btn welcome-btn-scholarships" onclick="enterSection('scholarships')">
+      <span class="welcome-btn-icon">🎓</span>
+      <span class="welcome-btn-label">منحتك للدراسة بالخارج</span>
+      <span class="welcome-btn-desc">اكتشف أفضل المنح<br/>والفرص التعليمية</span>
+    </button>
+  </div>
+
+  <!-- Bottom badge -->
+  <div class="welcome-badge welcome-anim-4">
+    <span>🌟</span>
+    <span>الوجهة الأولى للطلاب الأردنيين</span>
+  </div>
+</div>
+
+<!-- ====== EMERGENCY BAR ====== -->
+<div id="emergency-bar" class="relative z-50 bg-gradient-to-l from-yellow-600 via-orange-500 to-red-600 text-white text-sm py-2 overflow-hidden">
+  <div class="ticker-wrap">
+    <span class="ticker-text font-semibold px-8">
+      🚨 منحة طوارئ | المنحة التركية الحكومية 2025 — آخر موعد للتقديم 15 يونيو! &nbsp;🎓 منحة الشيخ محمد بن زايد للتميز الأكاديمي مفتوحة الآن! &nbsp;⚡ منح اليابان الحكومية MEXT 2025 — سارع بالتسجيل قبل انتهاء الوقت! &nbsp;🌍 منح الأمم المتحدة للدراسات العليا — التقديم مجاني!
+    </span>
+  </div>
+  <button onclick="document.getElementById('emergency-bar').remove()" class="absolute top-1/2 left-3 -translate-y-1/2 text-white opacity-70 hover:opacity-100 text-lg leading-none">✕</button>
+</div>
+
+<!-- ====== HEADER ====== -->
+<header id="main-header" class="glass sticky top-0 z-40 border-b border-white/10">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-indigo-600 flex items-center justify-center text-white font-black text-lg shadow-lg">ج</div>
+      <div>
+        <h1 class="text-lg font-black text-white leading-none">جاهز جو</h1>
+        <p class="text-xs text-indigo-300 leading-none">منصة المنح والفرص الأكاديمية</p>
+      </div>
+    </div>
+    <nav class="hidden md:flex items-center gap-1">
+      <!-- HOME BUTTON -->
+      <button onclick="showWelcome()" class="nav-home-btn" title="العودة للصفحة الرئيسية">🏠 الرئيسية</button>
+      <button onclick="switchTab('scholarships')" id="tab-scholarships" class="tab-btn active px-5 py-2 rounded-lg text-sm font-semibold text-white hover:text-yellow-400 transition-colors">🎓 المنح</button>
+      <button onclick="switchTab('blog')" id="tab-blog" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold text-white/70 hover:text-yellow-400 transition-colors">✍️ المدونة</button>
+      <button onclick="switchTab('favorites')" id="tab-favorites" class="tab-btn px-5 py-2 rounded-lg text-sm font-semibold text-white/70 hover:text-yellow-400 transition-colors">❤️ المفضلة <span id="fav-count" class="bg-red-500 text-white text-xs rounded-full px-1.5 ml-1"></span></button>
+    </nav>
+    <div class="flex items-center gap-2">
+      <button onclick="showWelcome()" class="md:hidden text-yellow-400/80 hover:text-yellow-400 text-xl" title="الرئيسية">🏠</button>
+      <button onclick="switchTab('favorites')" class="md:hidden text-white/70 hover:text-yellow-400 text-xl">❤️</button>
+      <button onclick="toggleMobileMenu()" class="md:hidden text-white/70 hover:text-white text-2xl">☰</button>
+    </div>
+  </div>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-white/10 px-4 pb-3 flex flex-col gap-1">
+    <button onclick="showWelcome();toggleMobileMenu()" class="text-right py-2 text-yellow-400/80 hover:text-yellow-400 font-semibold">🏠 الرئيسية</button>
+    <button onclick="switchTab('scholarships');toggleMobileMenu()" class="text-right py-2 text-white/80 hover:text-yellow-400 font-semibold">🎓 المنح الدراسية</button>
+    <button onclick="switchTab('blog');toggleMobileMenu()" class="text-right py-2 text-white/80 hover:text-yellow-400 font-semibold">✍️ مدونة المقالات</button>
+    <button onclick="switchTab('favorites');toggleMobileMenu()" class="text-right py-2 text-white/80 hover:text-yellow-400 font-semibold">❤️ المفضلة</button>
+  </div>
+</header>
+
+<!-- ====== HERO + SEARCH ====== -->
+<section class="relative z-10 py-12 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+    <div class="inline-block bg-gradient-to-l from-yellow-400/20 to-indigo-600/20 border border-yellow-400/30 rounded-full px-4 py-1.5 text-yellow-400 text-sm font-semibold mb-4 animate-bounce">🌟 الوجهة الأولى للطلاب الأردنيين</div>
+    <h2 class="text-4xl md:text-5xl font-black text-white mb-4 leading-tight">اكتشف منحتك <span class="text-transparent bg-clip-text bg-gradient-to-l from-yellow-400 to-indigo-400">المثالية</span></h2>
+    <p class="text-lg text-white/60 mb-8">أكبر مجتمع عربي لمتابعة المنح الدراسية والفرص الأكاديمية حول العالم</p>
+    <div class="relative max-w-2xl mx-auto">
+      <span class="absolute top-1/2 right-5 -translate-y-1/2 text-white/40 text-xl pointer-events-none">🔍</span>
+      <input type="text" id="search-input" class="search-input pr-12" placeholder="ابحث عن منحة، دولة، مقال..." oninput="liveFilter(this.value)"/>
+    </div>
+    <div class="flex flex-wrap justify-center gap-2 mt-4" id="filter-tags">
+      <button onclick="filterByTag('all')" class="tag tag-country cursor-pointer hover:scale-105 transition-transform px-4 py-1.5" data-filter="all">الكل</button>
+      <button onclick="filterByTag('ممولة بالكامل')" class="tag tag-full cursor-pointer hover:scale-105 transition-transform px-4 py-1.5" data-filter="full">ممولة بالكامل 💚</button>
+      <button onclick="filterByTag('تركيا')" class="tag tag-country cursor-pointer hover:scale-105 transition-transform px-4 py-1.5">تركيا 🇹🇷</button>
+      <button onclick="filterByTag('اليابان')" class="tag tag-country cursor-pointer hover:scale-105 transition-transform px-4 py-1.5">اليابان 🇯🇵</button>
+      <button onclick="filterByTag('ألمانيا')" class="tag tag-country cursor-pointer hover:scale-105 transition-transform px-4 py-1.5">ألمانيا 🇩🇪</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== STATS BAR ====== -->
+<section class="relative z-10 px-4 mb-8">
+  <div class="max-w-5xl mx-auto grid grid-cols-3 md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-4 text-center">
+      <div class="text-3xl font-black text-yellow-400" id="stat-total-scholarships">0</div>
+      <div class="text-xs text-white/60 mt-1">إجمالي المنح</div>
+    </div>
+    <div class="glass-card rounded-2xl p-4 text-center">
+      <div class="text-3xl font-black text-green-400" id="stat-active-scholarships">0</div>
+      <div class="text-xs text-white/60 mt-1">منح نشطة</div>
+    </div>
+    <div class="glass-card rounded-2xl p-4 text-center">
+      <div class="text-3xl font-black text-indigo-400" id="stat-total-articles">0</div>
+      <div class="text-xs text-white/60 mt-1">مقال ونصيحة</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MAIN CONTENT ====== -->
+<main class="relative z-10 max-w-7xl mx-auto px-4 pb-20">
+
+  <!-- SCHOLARSHIPS TAB -->
+  <div id="section-scholarships">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-2xl font-black text-white">🎓 المنح والفرص الدراسية</h3>
+      <span class="text-white/50 text-sm" id="results-count"></span>
+    </div>
+    <div id="scholarships-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="no-results" class="hidden text-center py-20 text-white/40">
+      <div class="text-6xl mb-4">🔍</div>
+      <p class="text-xl">لا توجد نتائج مطابقة للبحث</p>
+    </div>
+  </div>
+
+  <!-- BLOG TAB -->
+  <div id="section-blog" class="hidden">
+    <h3 class="text-2xl font-black text-white mb-6">✍️ مدونة المقالات والتوجيه الأكاديمي</h3>
+    <div id="blog-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="no-results-blog" class="hidden text-center py-20 text-white/40">
+      <div class="text-6xl mb-4">📝</div>
+      <p class="text-xl">لا توجد مقالات حتى الآن</p>
+    </div>
+  </div>
+
+  <!-- FAVORITES TAB -->
+  <div id="section-favorites" class="hidden">
+    <h3 class="text-2xl font-black text-white mb-6">❤️ العناصر المفضلة</h3>
+    <div id="favorites-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    <div id="no-favorites" class="text-center py-20 text-white/40">
+      <div class="text-6xl mb-4">🤍</div>
+      <p class="text-xl">لم تضف أي عناصر للمفضلة بعد</p>
+      <p class="text-sm mt-2">اضغط على أيقونة القلب في أي منحة أو مقال لحفظها هنا</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ====== FOOTER ====== -->
+<footer class="relative z-10 glass-dark border-t border-white/10 py-8 px-4">
+  <div class="max-w-7xl mx-auto text-center">
+    <div class="text-white/70 text-sm mb-2">🎓 منصة جاهز جو — وجهتك نحو التميز الأكاديمي</div>
+    <div class="flex flex-wrap justify-center gap-4 text-xs text-white/40 mb-4">
+      <span>سياسة الخصوصية</span>
+      <span>•</span>
+      <span>شروط الاستخدام</span>
+      <span>•</span>
+      <span>تواصل معنا</span>
+    </div>
+    <p id="footer-copy" class="text-xs text-white/30 cursor-default select-none">
+      © 2025 جاهز جو. جميع الحقوق محفوظة.
+    </p>
+  </div>
+</footer>
+
+<!-- ====== SCHOLARSHIP DETAIL MODAL ====== -->
+<div id="scholarship-modal" class="hidden modal-overlay">
+  <div class="modal-box p-0 overflow-hidden">
+    <div id="scholarship-modal-img" class="w-full h-56 bg-gradient-to-br from-indigo-800 to-purple-900 relative overflow-hidden">
+      <div class="absolute inset-0 bg-black/40"></div>
+      <div class="absolute bottom-4 right-4 flex gap-2 flex-wrap" id="modal-tags"></div>
+      <button onclick="closeScholarshipModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 text-lg">✕</button>
+    </div>
+    <div class="p-6 md:p-8">
+      <div class="flex items-start justify-between gap-4 mb-4">
+        <div>
+          <h2 class="text-2xl font-black text-white leading-tight" id="modal-title"></h2>
+          <div class="flex items-center gap-3 mt-2">
+            <span class="text-white/50 text-sm" id="modal-country"></span>
+            <span class="text-white/30">|</span>
+            <span class="text-sm font-semibold" id="modal-countdown-detail"></span>
+          </div>
+        </div>
+        <button onclick="toggleFavorite(currentScholarship.id,'scholarship')" id="modal-heart" class="text-3xl flex-shrink-0 transition-transform hover:scale-110">🤍</button>
+      </div>
+      <div class="glass rounded-xl p-5 mb-6">
+        <h3 class="text-yellow-400 font-bold mb-3">📋 تفاصيل وشروط المنحة</h3>
+        <div class="text-white/80 leading-relaxed text-sm" id="modal-details"></div>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-6" id="modal-info-grid"></div>
+      <button onclick="startAppGateway()" class="btn-gold w-full py-4 rounded-2xl text-lg font-black shadow-xl">🚀 التقديم الآن</button>
+    </div>
+  </div>
+</div>
+
+<!-- ====== APPLICATION GATEWAY ====== -->
+<div id="app-gateway" class="hidden">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" id="particles-container"></div>
+  <div class="text-center px-6 max-w-lg relative z-10">
+    <div class="mb-8">
+      <svg width="120" height="120" viewBox="0 0 120 120" class="mx-auto">
+        <circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,0.1)" stroke-width="8" fill="none"/>
+        <circle id="progress-ring" cx="60" cy="60" r="54" stroke="url(#ringGrad)" stroke-width="8" fill="none" class="progress-ring-fill" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#6366f1"/>
+            <stop offset="100%" stop-color="#f0b429"/>
+          </linearGradient>
+        </defs>
+        <text x="60" y="55" text-anchor="middle" fill="white" font-size="28" font-weight="900" font-family="Cairo,sans-serif" id="gateway-counter">12</text>
+        <text x="60" y="74" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Cairo,sans-serif">ثانية</text>
+      </svg>
+    </div>
+    <div class="mb-3">
+      <div class="text-xs text-white/40 mb-2">جارٍ توجيهك إلى موقع التقديم الرسمي</div>
+      <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+        <div id="app-progress" class="h-full bg-gradient-to-l from-yellow-400 to-indigo-500 rounded-full w-0"></div>
+      </div>
+    </div>
+    <div class="glass rounded-2xl p-6 mb-4 min-h-28 flex flex-col items-center justify-center gap-3">
+      <div class="text-yellow-400 text-2xl">💡</div>
+      <p id="wisdom-text" class="text-white/90 text-lg font-semibold leading-relaxed text-center wisdom-text"></p>
+    </div>
+    <button onclick="cancelGateway()" class="text-white/40 text-sm hover:text-white/70 transition-colors">إلغاء التوجيه</button>
+  </div>
+</div>
+
+<!-- ====== ARTICLE DETAIL MODAL ====== -->
+<div id="article-modal" class="hidden modal-overlay">
+  <div class="modal-box">
+    <div id="article-modal-img" class="w-full h-48 bg-gradient-to-br from-pink-800 to-purple-900 relative overflow-hidden rounded-t-2xl">
+      <div class="absolute inset-0 bg-black/40"></div>
+      <button onclick="closeArticleModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 text-lg">✕</button>
+    </div>
+    <div class="p-6 md:p-8" id="article-modal-body">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm" id="article-avatar">ج</div>
+        <div>
+          <p class="font-semibold text-white text-sm" id="article-author"></p>
+          <p class="text-white/40 text-xs" id="article-date"></p>
+        </div>
+        <button onclick="toggleFavorite(currentArticle.id,'article')" id="article-heart" class="mr-auto text-2xl transition-transform hover:scale-110">🤍</button>
+        <button id="tts-btn" onclick="toggleTTS()" class="glass px-3 py-1.5 rounded-lg text-xs text-white/70 hover:text-white flex items-center gap-1.5">🔊 <span id="tts-label">استمع</span></button>
+      </div>
+      <!-- AdSense 1 -->
+      <div class="adsense-placeholder mb-6 py-8">
+        <p class="text-xs text-white/30 font-semibold">📢 مساحة إعلانية مخصصة لـ Google AdSense</p>
+        <p class="text-xs text-white/20">728 × 90 — Banner Ad</p>
+      </div>
+      <h2 class="text-2xl font-black text-white leading-relaxed mb-4" id="article-title-detail"></h2>
+      <div class="text-white/75 leading-loose text-base" id="article-body-part1"></div>
+      <!-- AdSense 2 (inline) -->
+      <div class="adsense-placeholder my-6 py-10 float-left ml-4 w-64">
+        <p class="text-xs text-white/30 font-semibold">📢 إعلان Google AdSense</p>
+        <p class="text-xs text-white/20">300 × 250 — Rectangle</p>
+      </div>
+      <div class="text-white/75 leading-loose text-base" id="article-body-part2"></div>
+      <div class="clear-both"></div>
+      <!-- AdSense 3 -->
+      <div class="adsense-placeholder mt-8 mb-2 py-8">
+        <p class="text-xs text-white/30 font-semibold">📢 مساحة إعلانية مخصصة لـ Google AdSense</p>
+        <p class="text-xs text-white/20">728 × 90 — Footer Ad</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== ADMIN PANEL ====== -->
+<div id="admin-modal" class="hidden modal-overlay">
+  <div class="modal-box max-w-4xl">
+    <!-- Header -->
+    <div class="flex items-center justify-between p-6 border-b border-white/10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-xl">🛠️</div>
+        <div>
+          <h2 class="text-xl font-black text-white">لوحة تحكم الأدمن</h2>
+          <p class="text-xs text-white/40">جاهز جو — النظام الإداري المتكامل</p>
+        </div>
+      </div>
+      <button onclick="closeAdmin()" class="text-white/50 hover:text-white text-2xl">✕</button>
+    </div>
+
+    <!-- Login form -->
+    <div id="admin-login" class="p-8 flex flex-col items-center gap-4">
+      <div class="text-5xl">🔐</div>
+      <h3 class="text-xl font-bold text-white">أدخل رمز المرور السري</h3>
+      <input type="password" id="admin-pass-input" placeholder="●●●●●●●●" class="search-input text-center w-64 text-white placeholder-white/30" onkeydown="if(event.key==='Enter')checkAdminPass()"/>
+      <button onclick="checkAdminPass()" class="btn-gold px-8 py-3 rounded-xl">دخول</button>
+      <p id="admin-pass-error" class="text-red-400 text-sm hidden">❌ رمز المرور غير صحيح</p>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="admin-dashboard" class="hidden p-6">
+      <!-- Stats -->
+      <div class="grid grid-cols-3 gap-4 mb-8">
+        <div class="glass rounded-xl p-4 text-center" style="animation:adminPulse 2s infinite">
+          <div class="text-2xl font-black text-yellow-400" id="admin-stat-sch">0</div>
+          <div class="text-xs text-white/60">إجمالي المنح</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-black text-green-400" id="admin-stat-active">0</div>
+          <div class="text-xs text-white/60">منح نشطة</div>
+        </div>
+        <div class="glass rounded-xl p-4 text-center">
+          <div class="text-2xl font-black text-indigo-400" id="admin-stat-art">0</div>
+          <div class="text-xs text-white/60">المقالات</div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex gap-2 mb-6">
+        <button onclick="adminTab('sch')" id="admin-tab-sch" class="btn-gold px-4 py-2 rounded-lg text-sm">🎓 إضافة منحة</button>
+        <button onclick="adminTab('art')" id="admin-tab-art" class="glass px-4 py-2 rounded-lg text-sm text-white/70">✍️ إضافة مقال</button>
+        <button onclick="adminTab('manage')" id="admin-tab-manage" class="glass px-4 py-2 rounded-lg text-sm text-white/70">⚙️ إدارة المحتوى</button>
+      </div>
+
+      <!-- Add Scholarship Form -->
+      <div id="admin-form-sch">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">اسم المنحة *</label>
+            <input id="sch-name" type="text" placeholder="منحة تركيا الحكومية 2025" class="search-input rounded-xl"/>
+          </div>
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">الدولة *</label>
+            <input id="sch-country" type="text" placeholder="تركيا 🇹🇷" class="search-input rounded-xl"/>
+          </div>
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">نوع التمويل</label>
+            <select id="sch-funding" class="search-input rounded-xl bg-dark-800 text-white">
+              <option value="ممولة بالكامل">ممولة بالكامل 💚</option>
+              <option value="ممولة جزئياً">ممولة جزئياً 🟡</option>
+              <option value="غير محددة">غير محددة</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">تاريخ انتهاء التقديم *</label>
+            <input id="sch-deadline" type="date" class="search-input rounded-xl text-white"/>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">رابط التقديم الرسمي *</label>
+            <input id="sch-link" type="url" placeholder="https://..." class="search-input rounded-xl"/>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">تفاصيل وشروط المنحة الكاملة</label>
+            <textarea id="sch-details" rows="5" placeholder="اكتب هنا تفاصيل المنحة وشروطها بالتفصيل..." class="search-input rounded-xl resize-none"></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">صورة المنحة (من الجهاز)</label>
+            <input type="file" id="sch-image" accept="image/*" onchange="encodeImageToBase64(this,'sch-image-preview','sch-image-data')" class="hidden"/>
+            <div class="flex items-center gap-3">
+              <button onclick="document.getElementById('sch-image').click()" class="glass px-4 py-2 rounded-lg text-sm text-white/70 hover:text-white flex items-center gap-2">📤 اختر صورة</button>
+              <span id="sch-image-preview" class="text-xs text-white/40">لم يتم اختيار صورة</span>
+            </div>
+            <input type="hidden" id="sch-image-data"/>
+          </div>
+        </div>
+        <button onclick="addScholarship()" class="btn-gold w-full py-3 rounded-xl font-bold">➕ إضافة المنحة للقائمة</button>
+      </div>
+
+      <!-- Add Article Form -->
+      <div id="admin-form-art" class="hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">عنوان المقال *</label>
+            <input id="art-title" type="text" placeholder="أفضل 10 طرق للحصول على منحة دراسية..." class="search-input rounded-xl"/>
+          </div>
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">اسم الناشر *</label>
+            <input id="art-author" type="text" placeholder="فريق جاهز جو" class="search-input rounded-xl"/>
+          </div>
+          <div>
+            <label class="text-white/70 text-xs mb-1 block">التصنيف</label>
+            <select id="art-category" class="search-input rounded-xl bg-dark-800 text-white">
+              <option>نصائح أكاديمية</option>
+              <option>التقديم على المنح</option>
+              <option>التحضير للدراسة</option>
+              <option>مهارات شخصية</option>
+              <option>قصص نجاح</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">نص المقال الكامل *</label>
+            <textarea id="art-body" rows="8" placeholder="اكتب محتوى المقال هنا..." class="search-input rounded-xl resize-none"></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <label class="text-white/70 text-xs mb-1 block">صورة المقال (من الجهاز)</label>
+            <input type="file" id="art-image" accept="image/*" onchange="encodeImageToBase64(this,'art-image-preview','art-image-data')" class="hidden"/>
+            <div class="flex items-center gap-3">
+              <button onclick="document.getElementById('art-image').click()" class="glass px-4 py-2 rounded-lg text-sm text-white/70 hover:text-white flex items-center gap-2">📤 اختر صورة</button>
+              <span id="art-image-preview" class="text-xs text-white/40">لم يتم اختيار صورة</span>
+            </div>
+            <input type="hidden" id="art-image-data"/>
+          </div>
+        </div>
+        <button onclick="addArticle()" class="btn-primary w-full py-3 rounded-xl font-bold">➕ نشر المقال</button>
+      </div>
+
+      <!-- Manage Content -->
+      <div id="admin-form-manage" class="hidden">
+        <h4 class="text-white font-bold mb-4">⚙️ إدارة المحتوى المنشور</h4>
+        <div id="manage-list" class="space-y-2 max-h-80 overflow-y-auto"></div>
+      </div>
+
+      <!-- PUBLISH BUTTON -->
+      <div class="mt-8 pt-6 border-t border-white/10">
+        <div id="publish-status" class="text-center text-sm text-white/50 mb-3 min-h-5"></div>
+        <button onclick="publishToGitHub()" class="w-full py-5 rounded-2xl font-black text-xl text-dark-900 shadow-2xl relative overflow-hidden group" style="background:linear-gradient(135deg,#f0b429,#f59e0b,#fbbf24)">
+          <span class="relative z-10">🚀 نشر وتحديث المنصة فوراً</span>
+          <div class="absolute inset-0 bg-white/20 translate-x-full group-hover:translate-x-0 transition-transform duration-500"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== TOAST ====== -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
+  <div class="glass px-5 py-3 rounded-xl text-white font-semibold text-sm flex items-center gap-2 shadow-2xl">
+    <span id="toast-icon">✅</span>
+    <span id="toast-msg"></span>
+  </div>
+</div>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+/* ===================== CONSTANTS ===================== */
+const GITHUB_USERNAME = "greatmohammad2006-lab";
+const GITHUB_REPO     = "jahezjo-platform";
+const GITHUB_TOKEN    = "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";
+const MASTER_PASS     = "M7md@3li";
+const DATA_FILE_PATH  = "data.json";
+
+/* ===================== WISDOM QUOTES ===================== */
+const wisdoms = [
+  "العلم في الصغر كالنقش على الحجر، ثابتٌ لا يمحوه الزمن.",
+  "من جدّ وجد، ومن زرع حصد، ومن سعى في طلب العلم نال ما أراد.",
+  "لا تيأس؛ فكل ما يُبنى بصبرٍ وإرادة يُثمر ثماراً لا تُقدّر بثمن.",
+  "الوقت كالسيف، إن لم تقطعه قطعك. استثمر كل لحظة في تعلّم يُقربك من حلمك.",
+  "خير جليس في الزمان كتاب؛ فصاحبه ولا تفارقه تبلغ ما تريد.",
+  "النجاح ليس وجهة، بل هو رحلة متواصلة من التعلم والنمو والإصرار.",
+  "كل خطوة نحو العلم هي استثمار في مستقبل لا يعرف حدوداً.",
+  "حلمك الكبير يستحق صبراً أكبر؛ لا تبخل على نفسك بالوقت والجهد.",
+  "الفرصة لا تُطرق الباب مرتين — كن مستعداً دائماً لاستقبالها."
+];
+
+/* ===================== DEFAULT DATA ===================== */
+const defaultData = {
+  scholarships: [
+    {
+      id:"sch-1",
+      name:"منحة YTB التركية الحكومية 2025",
+      country:"تركيا 🇹🇷",
+      funding:"ممولة بالكامل",
+      deadline:"2025-06-15",
+      link:"https://www.ytb.gov.tr/",
+      details:"منحة حكومية تركية شاملة تغطي رسوم الدراسة كاملاً، مع مخصص شهري مجزٍ وسكن مجاني في الأوقاف الطلابية. تشمل دورة لغة تركية قبل الدراسة، وتأمين صحي كامل. متاحة للبكالوريوس والماجستير والدكتوراه.",
+      image:"",
+      created:"2025-01-15"
+    },
+    {
+      id:"sch-2",
+      name:"منحة MEXT اليابانية للدراسات العليا 2025",
+      country:"اليابان 🇯🇵",
+      funding:"ممولة بالكامل",
+      deadline:"2025-07-31",
+      link:"https://www.mext.go.jp/en/",
+      details:"منحة حكومية يابانية مرموقة لدرجة الماجستير والدكتوراه. تشمل: رسوم الدراسة كاملاً، راتب شهري مجزٍ، تذكرة سفر ذهاباً وإياباً، وبدل انتقال. تُقدّم الدراسة باللغتين اليابانية أو الإنجليزية. تتميز بمستوى علمي عالمي وفرص بحثية استثنائية.",
+      image:"",
+      created:"2025-01-20"
+    },
+    {
+      id:"sch-3",
+      name:"منحة DAAD الألمانية للدراسات العليا 2025",
+      country:"ألمانيا 🇩🇪",
+      funding:"ممولة جزئياً",
+      deadline:"2025-10-01",
+      link:"https://www.daad.de/en/",
+      details:"تقدم مؤسسة DAAD الألمانية منحاً متنوعة للطلاب الدوليين لإتمام دراستهم في ألمانيا. تشمل الدعم المالي الجزئي، فرص التدريب البحثي، وبرامج تبادل أكاديمي. تتوفر الدراسة باللغتين الألمانية والإنجليزية.",
+      image:"",
+      created:"2025-02-01"
+    },
+    {
+      id:"sch-4",
+      name:"منحة الشيخ محمد بن زايد للتميز الأكاديمي 2025",
+      country:"الإمارات 🇦🇪",
+      funding:"ممولة بالكامل",
+      deadline:"2025-08-20",
+      link:"https://www.mcknight.org/",
+      details:"منحة رائدة لأبناء الوطن العربي المتفوقين. تغطي جميع تكاليف الدراسة في أرقى الجامعات الإماراتية. تشمل: رسوم الدراسة، السكن، راتب شهري، وكمبيوتر محمول. يُشترط التفوق الدراسي ومعدل لا يقل عن 85%.",
+      image:"",
+      created:"2025-02-15"
+    },
+    {
+      id:"sch-5",
+      name:"منحة شيفنينغ البريطانية الملكية 2025",
+      country:"المملكة المتحدة 🇬🇧",
+      funding:"ممولة بالكامل",
+      deadline:"2025-11-04",
+      link:"https://www.chevening.org/",
+      details:"منحة حكومية بريطانية ملكية للقادة الطموحين. تشمل: رسوم الجامعة كاملاً، راتب معيشي شهري، تذاكر سفر، وتأمين صحياً. تُخصص لمرحلة الماجستير لمدة عام واحد في أرقى الجامعات البريطانية. تتطلب خبرة عملية لا تقل عن سنتين.",
+      image:"",
+      created:"2025-03-01"
+    },
+    {
+      id:"sch-6",
+      name:"منحة فولبرايت الأمريكية للدراسات العليا 2025",
+      country:"الولايات المتحدة 🇺🇸",
+      funding:"ممولة بالكامل",
+      deadline:"2025-09-15",
+      link:"https://foreign.fulbrightonline.org/",
+      details:"أعرق برامج المنح الأمريكية للطلاب الدوليين. تتيح الدراسة في أفضل الجامعات الأمريكية. تشمل: رسوم الدراسة، راتب شهري، تذاكر سفر، وتأمين صحي شامل. تُركّز على الطلاب ذوي الإنجازات الأكاديمية والقيادية المتميزة.",
+      image:"",
+      created:"2025-03-10"
+    }
+  ],
+  articles: [
+    {
+      id:"art-1",
+      title:"10 أسرار تضاعف فرصك في الحصول على منحة دراسية",
+      author:"فريق جاهز جو",
+      category:"نصائح أكاديمية",
+      body:"يظن كثيرون أن الحصول على منحة دراسية مجرد حظ، لكن الحقيقة أن للنجاح أسراراً ومفاتيح يجهلها أغلب المتقدمين.\n\nالسر الأول: ابدأ مبكراً جداً. معظم المنح تفتح أبوابها قبل 6 أشهر من الموعد النهائي. من يبدأ مبكراً يملك وقتاً كافياً لإعداد ملف استثنائي.\n\nالسر الثاني: اقرأ الشروط بعناية فائقة. كثيرون يُرفضون لتجاهلهم تفصيلة صغيرة في الشروط. اطبع الشروط وضع خطاً تحت كل نقطة.\n\nالسر الثالث: رسالة الدوافع هي قلب ملفك. اجعلها شخصية، صادقة، ومحددة. تحدث عن قصتك الحقيقية وكيف ستوظّف المنحة لخدمة مجتمعك.\n\nالسر الرابع: احصل على توصيات من أكاديميين وليس من معارف. رسالة توصية من أستاذك الجامعي تزن أكثر من أي رسالة أخرى.\n\nالسر الخامس: تعلم اللغة المطلوبة إلى مستوى عالٍ. لا تترك اختبار IELTS أو TOEFL أو Goethe لآخر لحظة.\n\nالسر السادس: قدّم على أكثر من منحة في آنٍ واحد. تنويع الخيارات يزيد احتمالية نجاحك.\n\nالسر السابع: الإنجازات التطوعية تُفرّق بين مرشح وآخر. أي عمل تطوعي أو مبادرة مجتمعية يُعزز ملفك.\n\nالسر الثامن: اتصل ببريد الجامعة أو الجهة الممنوحة لتُظهر اهتمامك الحقيقي قبل التقديم.\n\nالسر التاسع: راجع ملفك مع ثلاثة أشخاص على الأقل قبل إرساله.\n\nالسر العاشر: لا تستسلم بعد الرفض. اطلب تغذية راجعة وقدّم في الدورة القادمة أقوى وأجهز.",
+      image:"",
+      date:"2025-01-10T09:30:00"
+    },
+    {
+      id:"art-2",
+      title:"دليل IELTS الشامل: من الصفر إلى Band 7+ في 90 يوماً",
+      author:"محمد التميمي",
+      category:"التحضير للدراسة",
+      body:"يمثل اختبار IELTS بوابة الدخول لأغلب الجامعات العالمية. هذا الدليل يأخذك خطوة بخطوة لتحقيق الدرجة التي تحلم بها.\n\nأولاً: افهم بنية الاختبار. يتكون IELTS من أربعة أقسام: الاستماع (Listening)، القراءة (Reading)، الكتابة (Writing)، والمحادثة (Speaking). كل قسم له أسلوب محدد في التعامل معه.\n\nثانياً: التحضير لقسم الاستماع. استمع يومياً لمحتوى باللغة الإنجليزية: مقاطع BBC، TED Talks، بودكاست أكاديمي. مارس التدريبات بالتوقيت الحقيقي.\n\nثالثاً: القراءة السريعة والدقيقة. تعلم تقنية Skimming للقراءة السريعة وScanning للبحث عن معلومات محددة. خصص 40 دقيقة يومياً لقراءة مقالات إنجليزية متنوعة.\n\nرابعاً: الكتابة هي مفتاح الدرجة العالية. تعلم بنية Task 1 (وصف رسم بياني) وTask 2 (مقال رأي). استخدم عبارات انتقالية متنوعة وبنى جملية متباينة.\n\nخامساً: المحادثة: الثقة أولاً. لا تسكت أبداً. إذا لم تعرف الإجابة قل 'That's an interesting question, let me think...' واستمر. سجّل نفسك يومياً وراجع أخطاءك.",
+      image:"",
+      date:"2025-02-05T14:00:00"
+    },
+    {
+      id:"art-3",
+      title:"كيف تكتب رسالة دوافع تُذهل لجنة القبول وتضمن قبولك؟",
+      author:"نور الهدى",
+      category:"التقديم على المنح",
+      body:"رسالة الدوافع (Motivation Letter) هي روحك على ورقة. إنها الفرصة الوحيدة التي تتحدث فيها مباشرة للجنة القبول بلسانك الخاص.\n\nالمفهوم الخاطئ: كثيرون يكتبون رسالة دوافع تُعدّد إنجازاتهم كأنها سيرة ذاتية ثانية. هذا خطأ فادح.\n\nالمفهوم الصحيح: الرسالة هي قصة. قصتك أنت. لماذا أنت؟ لماذا الآن؟ لماذا هذه الجامعة تحديداً؟ وكيف ستُعيد للمجتمع ما أعطاك إياه؟\n\nالبنية المثالية لرسالة دوافع مؤثرة:\n\n١- الفقرة الافتتاحية: ابدأ بجملة صادمة وجذابة. لا تبدأ بـ 'اسمي...' أو 'أتشرف بالتقدم...'.\n\n٢- قصتك الشخصية: حادثة غيّرت مسارك، تحدٍّ واجهته، شغف ولد في داخلك.\n\n٣- إنجازاتك الموثقة: بأرقام وأمثلة محددة لا بعبارات مبهمة.\n\n٤- سبب اختيارك لهذه المؤسسة تحديداً: أبحث جيداً وأذكر أسماء أساتذة أو مختبرات أو مشاريع حقيقية.\n\n٥- رؤيتك المستقبلية: كيف ستُغير العالم بما ستتعلمه؟\n\n٦- الخاتمة القوية: لا تتوسل ولا تبالغ. كن واثقاً بهدوء.",
+      image:"",
+      date:"2025-03-01T10:15:00"
+    }
+  ]
+};
+
+/* ===================== STATE ===================== */
+let appData = JSON.parse(JSON.stringify(defaultData));
+let currentTab = 'scholarships';
+let currentScholarship = null;
+let currentArticle = null;
+let gatewayInterval = null;
+let gatewayTimeout = null;
+let ttsUtterance = null;
+let isSpeaking = false;
+let adminTimer = null;
+let wisdomInterval = null;
+
+/* ===================== WELCOME SCREEN LOGIC ===================== */
+
+// Generate twinkling stars
+(function initStars() {
+  const container = document.getElementById('welcome-stars');
+  for (let i = 0; i < 60; i++) {
+    const star = document.createElement('div');
+    star.className = 'welcome-star';
+    const size = Math.random() * 3 + 1;
+    star.style.cssText = `
+      width:${size}px;height:${size}px;
+      top:${Math.random()*100}%;
+      left:${Math.random()*100}%;
+      animation:twinkle ${Math.random()*4+2}s ease ${Math.random()*5}s infinite;
+    `;
+    container.appendChild(star);
+  }
+})();
+
+function enterSection(section) {
+  const ws = document.getElementById('welcome-screen');
+  ws.classList.add('welcome-exit');
+  setTimeout(() => {
+    ws.classList.add('hidden');
+    switchTab(section);
+    // Animate content
+    document.querySelector('main').classList.add('content-reveal');
+  }, 380);
+}
+
+function showWelcome() {
+  const ws = document.getElementById('welcome-screen');
+  ws.classList.remove('hidden', 'welcome-exit');
+  ws.style.animation = 'none';
+  ws.offsetHeight; // reflow
+  ws.style.animation = '';
+  // Close any open modals
+  closeScholarshipModal();
+  closeArticleModal();
+  closeAdmin();
+  cancelGateway();
+}
+
+/* ===================== FOOTER SECRET ADMIN ACCESS ===================== */
+// Method 1: Triple Click
+// Method 2: Long Press (2 seconds)
+
+(function initSecretAccess() {
+  const footerCopy = document.getElementById('footer-copy');
+  let clickCount = 0;
+  let clickTimer = null;
+  let longPressTimer = null;
+
+  // Triple Click Detection
+  footerCopy.addEventListener('click', function() {
+    clickCount++;
+    if (clickCount === 1) {
+      clickTimer = setTimeout(() => { clickCount = 0; }, 600);
+    }
+    if (clickCount >= 3) {
+      clearTimeout(clickTimer);
+      clickCount = 0;
+      openAdminModal();
+    }
+  });
+
+  // Long Press Detection (2 seconds) — Mouse
+  footerCopy.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    footerCopy.classList.add('tap-hint');
+    longPressTimer = setTimeout(() => {
+      footerCopy.classList.remove('tap-hint');
+      openAdminModal();
+    }, 2000);
+  });
+
+  footerCopy.addEventListener('mouseup', function() {
+    clearTimeout(longPressTimer);
+    footerCopy.classList.remove('tap-hint');
+  });
+
+  footerCopy.addEventListener('mouseleave', function() {
+    clearTimeout(longPressTimer);
+    footerCopy.classList.remove('tap-hint');
+  });
+
+  // Long Press Detection (2 seconds) — Touch
+  footerCopy.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    footerCopy.classList.add('tap-hint');
+    longPressTimer = setTimeout(() => {
+      footerCopy.classList.remove('tap-hint');
+      openAdminModal();
+    }, 2000);
+  }, { passive: false });
+
+  footerCopy.addEventListener('touchend', function() {
+    clearTimeout(longPressTimer);
+    footerCopy.classList.remove('tap-hint');
+  });
+
+  footerCopy.addEventListener('touchmove', function() {
+    clearTimeout(longPressTimer);
+    footerCopy.classList.remove('tap-hint');
+  });
+})();
+
+function openAdminModal() {
+  document.getElementById('admin-modal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    const inp = document.getElementById('admin-pass-input');
+    if (inp) inp.focus();
+  }, 100);
+}
+
+/* ===================== INIT ===================== */
+async function init() {
+  await loadDataFromGitHub();
+  renderScholarships();
+  renderBlog();
+  updateFavCount();
+  updateStats();
+  updateAdminStats();
+}
+
+/* ===================== LOAD DATA ===================== */
+async function loadDataFromGitHub() {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATA_FILE_PATH}`,{
+      headers:{'Authorization':`token ${GITHUB_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    if(res.ok){
+      const json = await res.json();
+      const decoded = JSON.parse(atob(json.content.replace(/\n/g,'')));
+      appData = decoded;
+      console.log('✅ تم تحميل البيانات من GitHub');
+    }
+  } catch(e) {
+    console.log('⚠️ تعذر الاتصال بـ GitHub، استخدام البيانات المحلية');
+    const local = localStorage.getItem('jahezjo-data');
+    if(local) appData = JSON.parse(local);
+  }
+}
+
+/* ===================== TABS ===================== */
+function switchTab(tab) {
+  currentTab = tab;
+  ['scholarships','blog','favorites'].forEach(t => {
+    document.getElementById(`section-${t}`).classList.toggle('hidden', t !== tab);
+    const btn = document.getElementById(`tab-${t}`);
+    if(btn){ btn.classList.toggle('active', t===tab); btn.classList.toggle('text-white', t===tab); btn.classList.toggle('text-white/70', t!==tab); }
+  });
+  // Sync search input on tab switch
+  document.getElementById('search-input').value = '';
+  if(tab==='favorites') renderFavorites();
+  if(tab==='blog') renderBlog('');
+  if(tab==='scholarships') renderScholarships('');
+}
+
+function toggleMobileMenu(){
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+}
+
+/* ===================== SCHOLARSHIPS RENDER ===================== */
+function renderScholarships(filter='') {
+  const grid = document.getElementById('scholarships-grid');
+  const noRes = document.getElementById('no-results');
+  let items = appData.scholarships;
+  if(filter) items = items.filter(s => JSON.stringify(s).toLowerCase().includes(filter.toLowerCase()));
+  grid.innerHTML = '';
+  if(!items.length){ noRes.classList.remove('hidden'); document.getElementById('results-count').textContent=''; return; }
+  noRes.classList.add('hidden');
+  document.getElementById('results-count').textContent = `${items.length} نتيجة`;
+  items.forEach(s => {
+    const days = getDaysLeft(s.deadline);
+    const isUrgent = days >= 0 && days <= 7;
+    const isFav = isFavorite(s.id);
+    const card = document.createElement('div');
+    card.className = 'glass-card rounded-2xl overflow-hidden fade-in cursor-pointer';
+    card.dataset.id = s.id;
+    card.innerHTML = `
+      <div class="relative h-40 overflow-hidden ${s.image ? '' : 'bg-gradient-to-br from-indigo-900 to-purple-900'}" onclick="openScholarship('${s.id}')">
+        ${s.image ? `<img src="${s.image}" class="w-full h-full object-cover"/>` : `<div class="absolute inset-0 flex items-center justify-center text-5xl">🎓</div>`}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+        <div class="absolute top-3 right-3 flex flex-wrap gap-1">
+          <span class="tag ${s.funding==='ممولة بالكامل'?'tag-full':'tag-partial'}">${s.funding}</span>
+          <span class="tag tag-country">${s.country}</span>
+        </div>
+        <button class="absolute top-3 left-3 text-2xl ${isFav?'text-red-400':'text-white/50'} hover:text-red-400 transition-colors z-10 heart-btn" onclick="event.stopPropagation();toggleFavorite('${s.id}','scholarship')" data-id="${s.id}">
+          ${isFav?'❤️':'🤍'}
+        </button>
+      </div>
+      <div class="p-4" onclick="openScholarship('${s.id}')">
+        <h3 class="font-bold text-white text-sm leading-relaxed mb-2 line-clamp-2">${s.name}</h3>
+        <div class="flex items-center justify-between">
+          <span class="text-xs ${isUrgent?'urgent-countdown':'text-white/50'}">
+            ${days < 0 ? '⛔ انتهى التقديم' : days === 0 ? '⚠️ آخر يوم!' : `⏰ ${days} يوم متبقٍ`}
+          </span>
+          <span class="text-xs text-white/30">${formatDate(s.deadline)}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ===================== BLOG RENDER ===================== */
+function renderBlog(filter='') {
+  const grid = document.getElementById('blog-grid');
+  const noRes = document.getElementById('no-results-blog');
+  let items = appData.articles;
+  if(filter) items = items.filter(a => JSON.stringify(a).toLowerCase().includes(filter.toLowerCase()));
+  grid.innerHTML = '';
+  if(!items.length){ noRes.classList.remove('hidden'); return; }
+  noRes.classList.add('hidden');
+  items.forEach(a => {
+    const isFav = isFavorite(a.id);
+    const card = document.createElement('div');
+    card.className = 'glass-card rounded-2xl overflow-hidden fade-in cursor-pointer';
+    card.innerHTML = `
+      <div class="relative h-36 overflow-hidden ${a.image ? '' : 'bg-gradient-to-br from-pink-900 to-purple-900'}" onclick="openArticle('${a.id}')">
+        ${a.image ? `<img src="${a.image}" class="w-full h-full object-cover"/>` : `<div class="absolute inset-0 flex items-center justify-center text-5xl">✍️</div>`}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute top-3 right-3"><span class="tag tag-blog">${a.category||'مقال'}</span></div>
+        <button class="absolute top-3 left-3 text-2xl ${isFav?'text-red-400':'text-white/50'} hover:text-red-400 z-10" onclick="event.stopPropagation();toggleFavorite('${a.id}','article')">
+          ${isFav?'❤️':'🤍'}
+        </button>
+      </div>
+      <div class="p-4" onclick="openArticle('${a.id}')">
+        <h3 class="font-bold text-white text-sm leading-relaxed mb-2 line-clamp-2">${a.title}</h3>
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs font-bold">${a.author?a.author[0]:'ج'}</div>
+          <span class="text-xs text-white/50">${a.author}</span>
+          <span class="text-xs text-white/30 mr-auto">${formatDateTime(a.date)}</span>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ===================== FAVORITES ===================== */
+function getFavorites(){ return JSON.parse(localStorage.getItem('jahezjo-favorites')||'[]'); }
+function saveFavorites(favs){ localStorage.setItem('jahezjo-favorites', JSON.stringify(favs)); }
+function isFavorite(id){ return getFavorites().includes(id); }
+function toggleFavorite(id, type) {
+  let favs = getFavorites();
+  const isF = favs.includes(id);
+  if(isF) favs = favs.filter(f => f !== id);
+  else { favs.push(id); showToast('تمت الإضافة للمفضلة ❤️'); }
+  saveFavorites(favs);
+  updateFavCount();
+  document.querySelectorAll(`[data-id="${id}"]`).forEach(btn => {
+    btn.textContent = isF ? '🤍' : '❤️';
+    btn.classList.toggle('text-red-400', !isF);
+    btn.classList.toggle('text-white/50', isF);
+    if(!isF){ btn.classList.add('heart-beat'); setTimeout(()=>btn.classList.remove('heart-beat'),400); }
+  });
+  if(document.getElementById('modal-heart')) document.getElementById('modal-heart').textContent = isFavorite(id)?'❤️':'🤍';
+  if(document.getElementById('article-heart')) document.getElementById('article-heart').textContent = isFavorite(id)?'❤️':'🤍';
+  if(currentTab==='favorites') renderFavorites();
+}
+
+function updateFavCount(){
+  const c = getFavorites().length;
+  const el = document.getElementById('fav-count');
+  el.textContent = c > 0 ? c : '';
+}
+
+function renderFavorites(){
+  const grid = document.getElementById('favorites-grid');
+  const noFav = document.getElementById('no-favorites');
+  const favIds = getFavorites();
+  grid.innerHTML = '';
+  const schFavs = appData.scholarships.filter(s => favIds.includes(s.id));
+  const artFavs = appData.articles.filter(a => favIds.includes(a.id));
+  const allFavs = [...schFavs, ...artFavs];
+  if(!allFavs.length){ noFav.classList.remove('hidden'); return; }
+  noFav.classList.add('hidden');
+  schFavs.forEach(s => {
+    const days = getDaysLeft(s.deadline);
+    const isUrgent = days >= 0 && days <= 7;
+    const card = document.createElement('div');
+    card.className = 'glass-card rounded-2xl overflow-hidden fade-in cursor-pointer';
+    card.innerHTML = `
+      <div class="relative h-36 ${s.image?'':'bg-gradient-to-br from-indigo-900 to-purple-900'}" onclick="openScholarship('${s.id}')">
+        ${s.image?`<img src="${s.image}" class="w-full h-full object-cover"/>`:`<div class="absolute inset-0 flex items-center justify-center text-4xl">🎓</div>`}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute top-3 right-3"><span class="tag tag-full">${s.funding}</span></div>
+        <button class="absolute top-3 left-3 text-2xl text-red-400 z-10" onclick="event.stopPropagation();toggleFavorite('${s.id}','scholarship')" data-id="${s.id}">❤️</button>
+      </div>
+      <div class="p-4" onclick="openScholarship('${s.id}')">
+        <h3 class="font-bold text-white text-sm leading-relaxed mb-1 line-clamp-2">${s.name}</h3>
+        <span class="text-xs ${isUrgent?'urgent-countdown':'text-white/50'}">${days<0?'⛔ انتهى':days===0?'⚠️ آخر يوم!':'⏰ '+days+' يوم'}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  artFavs.forEach(a => {
+    const card = document.createElement('div');
+    card.className = 'glass-card rounded-2xl overflow-hidden fade-in cursor-pointer';
+    card.innerHTML = `
+      <div class="relative h-36 ${a.image?'':'bg-gradient-to-br from-pink-900 to-purple-900'}" onclick="openArticle('${a.id}')">
+        ${a.image?`<img src="${a.image}" class="w-full h-full object-cover"/>`:`<div class="absolute inset-0 flex items-center justify-center text-4xl">✍️</div>`}
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+        <div class="absolute top-3 right-3"><span class="tag tag-blog">${a.category||'مقال'}</span></div>
+        <button class="absolute top-3 left-3 text-2xl text-red-400 z-10" onclick="event.stopPropagation();toggleFavorite('${a.id}','article')" data-id="${a.id}">❤️</button>
+      </div>
+      <div class="p-4" onclick="openArticle('${a.id}')">
+        <h3 class="font-bold text-white text-sm leading-relaxed mb-1 line-clamp-2">${a.title}</h3>
+        <span class="text-xs text-white/50">${a.author}</span>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ===================== OPEN SCHOLARSHIP MODAL ===================== */
+function openScholarship(id) {
+  const s = appData.scholarships.find(x => x.id === id);
+  if(!s) return;
+  currentScholarship = s;
+  const modal = document.getElementById('scholarship-modal');
+  const imgDiv = document.getElementById('scholarship-modal-img');
+  if(s.image) imgDiv.style.backgroundImage = `url(${s.image})`;
+  else imgDiv.style.background = 'linear-gradient(135deg,#312e81,#4f46e5,#6d28d9)';
+  document.getElementById('modal-title').textContent = s.name;
+  document.getElementById('modal-country').textContent = s.country;
+  const days = getDaysLeft(s.deadline);
+  const cdEl = document.getElementById('modal-countdown-detail');
+  cdEl.textContent = days<0?'⛔ انتهى التقديم':days===0?'⚠️ آخر يوم للتقديم!':'⏰ '+days+' يوماً متبقياً للتقديم';
+  cdEl.className = days>=0&&days<=7?'text-red-400 font-bold text-sm':'text-yellow-400 font-semibold text-sm';
+  document.getElementById('modal-details').innerHTML = s.details.replace(/\n/g,'<br/>');
+  document.getElementById('modal-tags').innerHTML = `<span class="tag ${s.funding==='ممولة بالكامل'?'tag-full':'tag-partial'}">${s.funding}</span><span class="tag tag-country">${s.country}</span>`;
+  document.getElementById('modal-heart').textContent = isFavorite(s.id)?'❤️':'🤍';
+  document.getElementById('modal-info-grid').innerHTML = `
+    <div class="glass rounded-xl p-4 text-center">
+      <div class="text-2xl mb-1">📅</div>
+      <div class="text-xs text-white/50">آخر موعد</div>
+      <div class="text-white font-bold text-sm">${formatDate(s.deadline)}</div>
+    </div>
+    <div class="glass rounded-xl p-4 text-center">
+      <div class="text-2xl mb-1">💰</div>
+      <div class="text-xs text-white/50">نوع التمويل</div>
+      <div class="text-white font-bold text-sm">${s.funding}</div>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeScholarshipModal() {
+  document.getElementById('scholarship-modal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+/* ===================== APP GATEWAY ===================== */
+function startAppGateway() {
+  closeScholarshipModal();
+  const gw = document.getElementById('app-gateway');
+  gw.classList.remove('hidden');
+  createParticles();
+  let seconds = 12;
+  let wisdomIndex = 0;
+  const ring = document.getElementById('progress-ring');
+  const counterEl = document.getElementById('gateway-counter');
+  const progressBar = document.getElementById('app-progress');
+  const wisdomEl = document.getElementById('wisdom-text');
+  const circumference = 2 * Math.PI * 54;
+  ring.style.strokeDasharray = circumference;
+  ring.style.strokeDashoffset = circumference;
+  wisdomEl.textContent = wisdoms[0];
+  wisdomIndex = 0;
+  wisdomInterval = setInterval(() => {
+    wisdomIndex = (wisdomIndex + 1) % wisdoms.length;
+    wisdomEl.style.opacity = '0';
+    setTimeout(() => { wisdomEl.textContent = wisdoms[wisdomIndex]; wisdomEl.style.opacity='1'; }, 300);
+  }, 4000);
+  wisdomEl.style.transition = 'opacity 0.3s ease';
+  gatewayInterval = setInterval(() => {
+    seconds--;
+    counterEl.textContent = seconds;
+    const offset = circumference - ((12-seconds)/12) * circumference;
+    ring.style.strokeDashoffset = offset;
+    const pct = ((12-seconds)/12)*100;
+    progressBar.style.width = pct + '%';
+    if(seconds <= 0) {
+      clearInterval(gatewayInterval);
+      clearInterval(wisdomInterval);
+      cancelGateway();
+      if(currentScholarship && currentScholarship.link) window.open(currentScholarship.link,'_blank');
+    }
+  }, 1000);
+}
+
+function cancelGateway() {
+  clearInterval(gatewayInterval);
+  clearInterval(wisdomInterval);
+  document.getElementById('app-gateway').classList.add('hidden');
+  document.getElementById('particles-container').innerHTML = '';
+}
+
+function createParticles() {
+  const c = document.getElementById('particles-container');
+  c.innerHTML = '';
+  const colors = ['#6366f1','#f0b429','#a855f7','#22c55e','#3b82f6'];
+  for(let i=0;i<25;i++){
+    const p = document.createElement('div');
+    const size = Math.random()*8+3;
+    p.className='particle';
+    p.style.cssText=`width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};top:${Math.random()*100}%;right:${Math.random()*100}%;animation-duration:${Math.random()*8+4}s;animation-delay:${Math.random()*4}s;`;
+    c.appendChild(p);
+  }
+}
+
+/* ===================== OPEN ARTICLE ===================== */
+function openArticle(id) {
+  const a = appData.articles.find(x => x.id === id);
+  if(!a) return;
+  currentArticle = a;
+  const modal = document.getElementById('article-modal');
+  const imgDiv = document.getElementById('article-modal-img');
+  if(a.image){ imgDiv.innerHTML=`<img src="${a.image}" class="w-full h-full object-cover"/><div class="absolute inset-0 bg-black/40"></div><button onclick="closeArticleModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 text-lg">✕</button>`; }
+  else imgDiv.innerHTML=`<div class="absolute inset-0 flex items-center justify-center text-5xl">✍️</div><div class="absolute inset-0 bg-black/40"></div><button onclick="closeArticleModal()" class="absolute top-4 left-4 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80 text-lg">✕</button>`;
+  document.getElementById('article-author').textContent = a.author;
+  document.getElementById('article-avatar').textContent = a.author?a.author[0]:'ج';
+  document.getElementById('article-date').textContent = formatDateTime(a.date);
+  document.getElementById('article-heart').textContent = isFavorite(a.id)?'❤️':'🤍';
+  document.getElementById('article-title-detail').textContent = a.title;
+  const bodyLines = a.body.split('\n');
+  const mid = Math.floor(bodyLines.length/2);
+  document.getElementById('article-body-part1').innerHTML = bodyLines.slice(0,mid).join('<br/>');
+  document.getElementById('article-body-part2').innerHTML = bodyLines.slice(mid).join('<br/>');
+  document.getElementById('tts-label').textContent='استمع';
+  modal.classList.remove('hidden');
+  document.body.style.overflow='hidden';
+  const overlay = modal;
+  overlay.addEventListener('scroll', updateReadingProgress);
+}
+
+function closeArticleModal() {
+  if(isSpeaking){ speechSynthesis.cancel(); isSpeaking=false; }
+  document.getElementById('article-modal').classList.add('hidden');
+  document.body.style.overflow='';
+  document.getElementById('reading-progress').style.width='0%';
+}
+
+function updateReadingProgress() {
+  const modal = document.getElementById('article-modal');
+  const scrolled = modal.scrollTop;
+  const total = modal.scrollHeight - modal.clientHeight;
+  const pct = total>0?(scrolled/total)*100:0;
+  document.getElementById('reading-progress').style.width=pct+'%';
+}
+
+/* ===================== TTS ===================== */
+function toggleTTS() {
+  if(!currentArticle) return;
+  if(isSpeaking){ speechSynthesis.cancel(); isSpeaking=false; document.getElementById('tts-label').textContent='استمع'; return; }
+  ttsUtterance = new SpeechSynthesisUtterance(currentArticle.title + '. ' + currentArticle.body);
+  ttsUtterance.lang='ar-SA';
+  ttsUtterance.rate=0.9;
+  ttsUtterance.onend = () => { isSpeaking=false; document.getElementById('tts-label').textContent='استمع'; };
+  speechSynthesis.speak(ttsUtterance);
+  isSpeaking=true;
+  document.getElementById('tts-label').textContent='إيقاف';
+}
+
+/* ===================== LIVE FILTER ===================== */
+function liveFilter(q) {
+  q = q.trim().toLowerCase();
+  if(currentTab==='scholarships') renderScholarships(q);
+  else if(currentTab==='blog') renderBlog(q);
+}
+
+function filterByTag(tag) {
+  if(tag==='all'){ document.getElementById('search-input').value=''; renderScholarships(''); return; }
+  document.getElementById('search-input').value=tag;
+  renderScholarships(tag);
+  // Make sure scholarships tab is active
+  if(currentTab!=='scholarships') switchTab('scholarships');
+}
+
+/* ===================== STATS ===================== */
+function updateStats() {
+  const total = appData.scholarships.length;
+  const active = appData.scholarships.filter(s=>getDaysLeft(s.deadline)>=0).length;
+  const arts = appData.articles.length;
+  animateNumber('stat-total-scholarships', total);
+  animateNumber('stat-active-scholarships', active);
+  animateNumber('stat-total-articles', arts);
+}
+
+function updateAdminStats(){
+  document.getElementById('admin-stat-sch').textContent = appData.scholarships.length;
+  document.getElementById('admin-stat-active').textContent = appData.scholarships.filter(s=>getDaysLeft(s.deadline)>=0).length;
+  document.getElementById('admin-stat-art').textContent = appData.articles.length;
+}
+
+function animateNumber(id, target) {
+  let cur=0; const el=document.getElementById(id);
+  const step=Math.max(1,Math.floor(target/30));
+  const t=setInterval(()=>{ cur=Math.min(cur+step,target); el.textContent=cur; if(cur>=target)clearInterval(t); },40);
+}
+
+/* ===================== ADMIN PANEL ===================== */
+function closeAdmin() {
+  document.getElementById('admin-modal').classList.add('hidden');
+  document.body.style.overflow='';
+  document.getElementById('admin-login').classList.remove('hidden');
+  document.getElementById('admin-dashboard').classList.add('hidden');
+  document.getElementById('admin-pass-input').value='';
+  document.getElementById('admin-pass-error').classList.add('hidden');
+}
+
+function checkAdminPass() {
+  const p = document.getElementById('admin-pass-input').value;
+  if(p === MASTER_PASS) {
+    document.getElementById('admin-login').classList.add('hidden');
+    document.getElementById('admin-dashboard').classList.remove('hidden');
+    updateAdminStats();
+  } else {
+    document.getElementById('admin-pass-error').classList.remove('hidden');
+    document.getElementById('admin-pass-input').value='';
+  }
+}
+
+function adminTab(t) {
+  ['sch','art','manage'].forEach(x => {
+    const btn = document.getElementById(`admin-tab-${x}`);
+    const form = document.getElementById(`admin-form-${x}`);
+    if(btn){ btn.className = x===t?'btn-gold px-4 py-2 rounded-lg text-sm':'glass px-4 py-2 rounded-lg text-sm text-white/70'; }
+    if(form){ form.classList.toggle('hidden', x!==t); }
+  });
+  if(t==='manage') renderManageList();
+}
+
+function renderManageList(){
+  const list = document.getElementById('manage-list');
+  list.innerHTML='';
+  appData.scholarships.forEach(s=>{
+    const div=document.createElement('div');
+    div.className='glass rounded-xl p-3 flex items-center justify-between gap-2';
+    div.innerHTML=`<span class="text-white text-sm flex-1 truncate">🎓 ${s.name}</span><button onclick="deleteItem('${s.id}','scholarship')" class="text-red-400 hover:text-red-300 text-sm px-2">🗑️</button>`;
+    list.appendChild(div);
+  });
+  appData.articles.forEach(a=>{
+    const div=document.createElement('div');
+    div.className='glass rounded-xl p-3 flex items-center justify-between gap-2';
+    div.innerHTML=`<span class="text-white text-sm flex-1 truncate">✍️ ${a.title}</span><button onclick="deleteItem('${a.id}','article')" class="text-red-400 hover:text-red-300 text-sm px-2">🗑️</button>`;
+    list.appendChild(div);
+  });
+}
+
+function deleteItem(id, type){
+  if(!confirm('هل أنت متأكد من الحذف؟')) return;
+  if(type==='scholarship') appData.scholarships=appData.scholarships.filter(s=>s.id!==id);
+  else appData.articles=appData.articles.filter(a=>a.id!==id);
+  localStorage.setItem('jahezjo-data',JSON.stringify(appData));
+  renderManageList();
+  renderScholarships();
+  renderBlog();
+  updateStats();
+  updateAdminStats();
+  showToast('تم الحذف بنجاح 🗑️','❌');
+}
+
+/* ===================== ADD SCHOLARSHIP ===================== */
+function addScholarship() {
+  const name=document.getElementById('sch-name').value.trim();
+  const country=document.getElementById('sch-country').value.trim();
+  const funding=document.getElementById('sch-funding').value;
+  const deadline=document.getElementById('sch-deadline').value;
+  const link=document.getElementById('sch-link').value.trim();
+  const details=document.getElementById('sch-details').value.trim();
+  const image=document.getElementById('sch-image-data').value;
+  if(!name||!country||!deadline||!link){showToast('يرجى ملء جميع الحقول المطلوبة *','⚠️');return;}
+  const sch={id:'sch-'+Date.now(),name,country,funding,deadline,link,details,image,created:new Date().toISOString().split('T')[0]};
+  appData.scholarships.unshift(sch);
+  localStorage.setItem('jahezjo-data',JSON.stringify(appData));
+  ['sch-name','sch-country','sch-deadline','sch-link','sch-details'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('sch-image-data').value='';
+  document.getElementById('sch-image-preview').textContent='لم يتم اختيار صورة';
+  renderScholarships();
+  updateStats();
+  updateAdminStats();
+  showToast('تمت إضافة المنحة بنجاح ✅');
+}
+
+/* ===================== ADD ARTICLE ===================== */
+function addArticle() {
+  const title=document.getElementById('art-title').value.trim();
+  const author=document.getElementById('art-author').value.trim();
+  const category=document.getElementById('art-category').value;
+  const body=document.getElementById('art-body').value.trim();
+  const image=document.getElementById('art-image-data').value;
+  if(!title||!author||!body){showToast('يرجى ملء جميع الحقول المطلوبة *','⚠️');return;}
+  const art={id:'art-'+Date.now(),title,author,category,body,image,date:new Date().toISOString()};
+  appData.articles.unshift(art);
+  localStorage.setItem('jahezjo-data',JSON.stringify(appData));
+  ['art-title','art-author','art-body'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('art-image-data').value='';
+  document.getElementById('art-image-preview').textContent='لم يتم اختيار صورة';
+  renderBlog();
+  updateStats();
+  updateAdminStats();
+  showToast('تم نشر المقال بنجاح ✅');
+}
+
+/* ===================== BASE64 IMAGE ===================== */
+function encodeImageToBase64(input, previewId, dataId) {
+  const file = input.files[0];
+  if(!file) return;
+  document.getElementById(previewId).textContent = `📷 ${file.name} (جارٍ التحويل...)`;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById(dataId).value = e.target.result;
+    document.getElementById(previewId).textContent = `✅ ${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+  };
+  reader.readAsDataURL(file);
+}
+
+/* ===================== PUBLISH TO GITHUB ===================== */
+async function publishToGitHub() {
+  const statusEl = document.getElementById('publish-status');
+  statusEl.textContent = '⏳ جارٍ الاتصال بـ GitHub...';
+  statusEl.className = 'text-center text-sm text-yellow-400 mb-3 min-h-5';
+  try {
+    const getRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATA_FILE_PATH}`,{
+      headers:{'Authorization':`token ${GITHUB_TOKEN}`,'Accept':'application/vnd.github.v3+json'}
+    });
+    let sha = null;
+    if(getRes.ok){ const j=await getRes.json(); sha=j.sha; }
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(appData,null,2))));
+    const body = {message:`🚀 تحديث بيانات المنصة — ${new Date().toLocaleString('ar-JO')}`,content};
+    if(sha) body.sha = sha;
+    statusEl.textContent = '📤 جارٍ رفع البيانات...';
+    const putRes = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATA_FILE_PATH}`,{
+      method:'PUT',
+      headers:{'Authorization':`token ${GITHUB_TOKEN}`,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},
+      body:JSON.stringify(body)
+    });
+    if(putRes.ok || putRes.status===201){
+      statusEl.textContent = '✅ تم النشر بنجاح! Netlify سيتحدث خلال ثوانٍ.';
+      statusEl.className = 'text-center text-sm text-green-400 mb-3 min-h-5';
+      showToast('تم النشر على GitHub بنجاح 🚀');
+    } else {
+      const err = await putRes.json();
+      throw new Error(err.message||'فشل الرفع');
+    }
+  } catch(e) {
+    statusEl.textContent = `❌ خطأ: ${e.message}`;
+    statusEl.className = 'text-center text-sm text-red-400 mb-3 min-h-5';
+    showToast('فشل النشر: ' + e.message,'❌');
+  }
+}
+
+/* ===================== UTILS ===================== */
+function getDaysLeft(deadline){
+  const d=new Date(deadline); d.setHours(23,59,59);
+  const now=new Date();
+  return Math.floor((d-now)/(1000*60*60*24));
+}
+
+function formatDate(d){ if(!d)return''; try{return new Date(d).toLocaleDateString('ar-JO',{year:'numeric',month:'long',day:'numeric'});}catch{return d;} }
+function formatDateTime(d){ if(!d)return''; try{return new Date(d).toLocaleDateString('ar-JO',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'});}catch{return d;} }
+
+function showToast(msg, icon='✅'){
+  const t=document.getElementById('toast'); document.getElementById('toast-msg').textContent=msg; document.getElementById('toast-icon').textContent=icon;
+  t.classList.remove('hidden'); clearTimeout(t._timer);
+  t._timer=setTimeout(()=>t.classList.add('hidden'),3500);
+}
+
+/* ===================== CLOSE MODALS ON OVERLAY CLICK ===================== */
+document.getElementById('scholarship-modal').addEventListener('click',function(e){if(e.target===this)closeScholarshipModal();});
+document.getElementById('article-modal').addEventListener('click',function(e){if(e.target===this)closeArticleModal();});
+document.getElementById('admin-modal').addEventListener('click',function(e){if(e.target===this)closeAdmin();});
+
+/* ===================== READING PROGRESS ON ARTICLE MODAL SCROLL ===================== */
+document.getElementById('article-modal').addEventListener('scroll', updateReadingProgress);
+
+/* ===================== ESC KEY ===================== */
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    closeScholarshipModal();
+    closeArticleModal();
+    closeAdmin();
+    cancelGateway();
+  }
+});
+
+/* ===================== BOOT ===================== */
+init();
+</script>
+</body>
+</html>
