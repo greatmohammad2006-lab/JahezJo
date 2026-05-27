@@ -1,2 +1,0 @@
-# JahezJo
-jahezjo-platform-admin
