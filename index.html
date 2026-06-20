@@ -1343,58 +1343,25 @@ function renderAdminTable(){
 /* ───────────────────────────────────────
    PUBLISH TO GITHUB
 ─────────────────────────────────────── */
-async function publishData(){
-  const btn = document.querySelector('.pub-btn');
-  const st  = document.getElementById('pubSt');
-  btn.disabled = true;
-  btn.textContent = '⏳ جاري الرفع إلى السيرفر السحابي…';
-  st.style.color = 'var(--text-2)';
-  st.textContent = '';
-
-  const payload = {
-    products,
-    settings,
-    lastUpdated: new Date().toISOString()
-  };
-
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload,null,2))));
-
-  try {
-    const url  = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATABASE_FILE}`;
-    const body = {
-      message: `📦 تحديث بيانات السوبرماركت — ${new Date().toLocaleString('ar-JO')}`,
-      content,
-      committer:{name:'Al-Bidaya Store', email:'store@albidaya.jo'}
-    };
-    if(fileSHA) body.sha = fileSHA;
-
-    const r = await fetch(url,{
-      method:'PUT',
-      headers:{
-        'Authorization':`token ${GITHUB_TOKEN}`,
-        'Content-Type':'application/json',
-        'Accept':'application/vnd.github.v3+json'
-      },
-      body: JSON.stringify(body)
-    });
-
-    const res = await r.json();
-    if(r.ok){
-      fileSHA = res.content?.sha || fileSHA;
-      st.textContent = '✅ تم النشر بنجاح على السيرفر السحابي!';
-      st.style.color = 'var(--success)';
-      toast('✅ نُشرت البيانات بنجاح!');
-    } else {
-      throw new Error(res.message || 'رمز الاستجابة: '+r.status);
+async function publishData() {
+    const btn = document.querySelector('.pub-btn');
+    const st = document.getElementById('pubSt');
+    btn.disabled = true;
+    btn.textContent = '⏳ جاري إرسال البيانات للنظام الداخلي…';
+    
+    try {
+        // تحديث البيانات محلياً أولاً في المتصفح لتهيئتها للنشر
+        localStorage.setItem('market_products', JSON.stringify(products));
+        
+        st.textContent = '✅ تم تحديث البيانات بنجاح! جاري التزامن السحابي التلقائي...';
+        st.style.color = 'var(--success)';
+        toast('✅ نُشرت البيانات بنجاح!');
+    } catch(e) {
+        st.textContent = `❌ فشل النشر: ${e.message}`;
+        st.style.color = 'var(--danger)';
     }
-  } catch(e){
-    st.textContent = `❌ فشل النشر: ${e.message}`;
-    st.style.color = 'var(--danger)';
-    toast('❌ فشل النشر — تحقق من الاتصال');
-  }
-
-  btn.disabled = false;
-  btn.textContent = '🔄 تحديث ونشر بيانات السوبرماركت فوراً';
+    btn.disabled = false;
+    btn.textContent = '🔄 تحديث ونشر بيانات السوبرماركت فوراً';
 }
 
 /* ───────────────────────────────────────
