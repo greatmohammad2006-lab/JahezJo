@@ -1,7 +1,10 @@
 name: Save Market Data
 on:
-  repository_dispatch:
-    types: [update-data]
+  workflow_dispatch:
+    inputs:
+      products:
+        description: 'بيانات المنتجات'
+        required: true
 
 jobs:
   update:
@@ -12,7 +15,7 @@ jobs:
 
       - name: Update JSON File
         run: |
-          echo '${{ github.event.client_payload.products }}' > market_data.json
+          echo '${{ github.event.inputs.products }}' > market_data.json
 
       - name: Commit and Push Changes
         run: |
