@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>محلات البداية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+/* ===========================
+   TOKENS
+=========================== */
+:root {
+  --bg:           #F7F7F5;
+  --surface:      #FFFFFF;
+  --surface-2:    #F2F2F0;
+  --primary:      #1A5C38;
+  --primary-mid:  #2E7D52;
+  --primary-light:#E6F2EC;
+  --primary-dim:  #C3DDD0;
+  --gold:         #B8892A;
+  --gold-light:   #FBF4E6;
+  --text-1:       #1A1A1A;
+  --text-2:       #5A5A5A;
+  --text-3:       #9A9A9A;
+  --border:       #E4E4E0;
+  --border-mid:   #D0D0CC;
+  --danger:       #C0392B;
+  --danger-light: #FDEEEC;
+  --success:      #27AE60;
+  --r-xs:  6px;
+  --r-sm:  10px;
+  --r-md:  16px;
+  --r-lg:  22px;
+  --r-xl:  28px;
+  --sh-xs: 0 1px 3px rgba(0,0,0,.05);
+  --sh-sm: 0 2px 8px rgba(0,0,0,.07);
+  --sh-md: 0 6px 18px rgba(0,0,0,.09);
+  --sh-lg: 0 14px 36px rgba(0,0,0,.11);
+}
+
+/* ===========================
+   BASE RESET
+=========================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text-1);
+  direction: rtl;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: 'Cairo', sans-serif; cursor: pointer; }
+input, select, textarea { font-family: 'Cairo', sans-serif; }
+
+/* ===========================
+   HEADER
+=========================== */
+.hdr {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 120;
+}
+.hdr::after {
+  content: '';
+  display: block; height: 2px;
+  background: linear-gradient(90deg, var(--primary) 0%, var(--gold) 50%, var(--primary) 100%);
+  opacity: .55;
+}
+.hdr-inner {
+  max-width: 1120px; margin: 0 auto;
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+}
+.logo { flex: 1; }
+.logo-name {
+  font-size: 20px; font-weight: 800;
+  color: var(--primary); letter-spacing: -.3px;
+  display: flex; align-items: center; gap: 6px;
+}
+.logo-name span { font-size: 22px; }
+.logo-tag {
+  font-size: 11px; color: var(--text-2); font-weight: 400;
+  margin-top: 1px; letter-spacing: .1px;
+}
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 50px;
+  background: var(--primary-light);
+  flex-shrink: 0;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--success);
+  animation: blink 1.8s ease-in-out infinite;
+}
+@keyframes blink {
+  0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(39,174,96,.4); }
+  50%      { opacity:.7; box-shadow:0 0 0 4px rgba(39,174,96,0); }
+}
+.status-label { font-size: 11px; font-weight: 600; color: var(--primary); white-space:nowrap; }
+.cart-btn {
+  position: relative; background: none; border: none;
+  padding: 8px; border-radius: var(--r-sm);
+  font-size: 24px; line-height:1;
+  transition: background .2s;
+  flex-shrink: 0;
+}
+.cart-btn:hover { background: var(--primary-light); }
+.badge {
+  position: absolute; top: 0; left: 0;
+  background: var(--primary); color: #fff;
+  font-size: 10px; font-weight: 700;
+  min-width: 17px; height: 17px;
+  border-radius: 9px; padding: 0 4px;
+  display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+@keyframes shake {
+  0%,100%{transform:rotate(0)}
+  20%{transform:rotate(-16deg)}
+  40%{transform:rotate(14deg)}
+  60%{transform:rotate(-10deg)}
+  80%{transform:rotate(8deg)}
+}
+.cart-btn.popped .cart-icon { animation: shake .5s ease; display:inline-block; }
+
+/* ===========================
+   MAIN WRAPPER
+=========================== */
+.main { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+/* ===========================
+   SEARCH
+=========================== */
+.search-wrap { position: relative; padding: 20px 0 0; }
+.search-ico {
+  position: absolute; right: 14px; top: 50%; margin-top:10px;
+  transform: translateY(-50%);
+  color: var(--text-3); font-size: 16px; pointer-events: none;
+}
+.search-inp {
+  width: 100%; padding: 13px 42px 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: 14px; font-weight: 400;
+  background: var(--surface); color: var(--text-1);
+  outline: none; direction: rtl;
+  transition: border-color .2s, box-shadow .2s;
+}
+.search-inp::placeholder { color: var(--text-3); }
+.search-inp:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,92,56,.09);
+}
+
+/* ===========================
+   CATEGORIES
+=========================== */
+.cats {
+  display: flex; gap: 8px;
+  padding: 14px 0 18px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.cats::-webkit-scrollbar { display: none; }
+.cat-btn {
+  flex-shrink: 0;
+  padding: 7px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  background: var(--surface);
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text-2);
+  transition: all .2s; white-space: nowrap;
+}
+.cat-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+.cat-btn.on { background: var(--primary); border-color: var(--primary); color: #fff; font-weight: 600; }
+
+/* ===========================
+   PRODUCTS GRID
+=========================== */
+.sec-title { font-size: 14px; font-weight: 700; color: var(--text-2); margin-bottom: 14px; letter-spacing: .3px; text-transform: uppercase; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 13px; padding-bottom: 90px;
+}
+@media(min-width:700px){ .grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); } }
+@media(min-width:1024px){ .grid { grid-template-columns: repeat(5,1fr); } }
+
+.pcard {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--sh-xs);
+  transition: transform .22s, box-shadow .22s;
+}
+.pcard:hover { transform: translateY(-3px); box-shadow: var(--sh-md); }
+.pcard-img {
+  width: 100%; aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.pcard-placeholder {
+  width: 100%; aspect-ratio: 1/1;
+  background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 44px;
+}
+.pcard-body { padding: 10px 12px 13px; }
+.pcard-name { font-size: 13px; font-weight: 600; line-height: 1.4; margin-bottom: 3px; }
+.pcard-wt { font-size: 11px; color: var(--text-3); margin-bottom: 9px; }
+.pcard-foot { display: flex; align-items: center; justify-content: space-between; }
+.pcard-price { font-size: 15px; font-weight: 800; color: var(--primary); }
+.pcard-price sub { font-size: 10px; font-weight: 500; color: var(--text-2); vertical-align: baseline; }
+.add-btn {
+  width: 31px; height: 31px; border-radius: 50%;
+  background: var(--primary); border: none; color: #fff;
+  font-size: 21px; font-weight: 300; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, transform .15s;
+}
+.add-btn:hover { background: var(--primary-mid); }
+.add-btn:active { transform: scale(.88); }
+
+/* ===========================
+   EMPTY / LOADING
+=========================== */
+.empty { text-align: center; padding: 56px 20px; grid-column: 1/-1; }
+.empty-ico { font-size: 46px; margin-bottom: 10px; }
+.empty-txt { font-size: 14px; color: var(--text-2); font-weight: 500; }
+.spin-wrap { text-align: center; padding: 60px 20px; grid-column: 1/-1; }
+.spinner {
+  display: inline-block; width: 34px; height: 34px;
+  border: 3px solid var(--border); border-top-color: var(--primary);
+  border-radius: 50%; animation: spin .75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===========================
+   OVERLAY BACKDROP
+=========================== */
+.ov {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.38); backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none;
+  transition: opacity .28s;
+}
+.ov.on { opacity: 1; pointer-events: all; }
+
+/* ===========================
+   CART DRAWER
+=========================== */
+.drawer {
+  position: fixed; z-index: 201;
+  bottom: 0; left: 0; right: 0;
+  background: var(--surface);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  max-height: 88vh; overflow-y: auto;
+  padding: 0 18px 28px;
+  transform: translateY(100%);
+  transition: transform .32s cubic-bezier(.32,.72,0,1);
+}
+@media(min-width:600px){
+  .drawer{
+    right:auto; left:auto;
+    width:460px; top:0; bottom:0;
+    max-height:100vh; border-radius:0;
+    border-left:1px solid var(--border);
+  }
+  .drawer.on { transform: translateX(0); }
+}
+.drawer.on { transform: translateY(0); }
+.drawer-handle {
+  width: 34px; height: 4px; border-radius: 2px;
+  background: var(--border); margin: 14px auto 20px;
+}
+@media(min-width:600px){ .drawer-handle{ display:none; } }
+.drawer-title { font-size: 18px; font-weight: 800; margin-bottom: 16px; }
+.cart-list { display: flex; flex-direction: column; gap: 11px; margin-bottom: 18px; }
+.citem {
+  display: flex; align-items: center; gap: 11px;
+  padding: 11px 12px; background: var(--surface-2);
+  border-radius: var(--r-md);
+}
+.citem-thumb {
+  width: 48px; height: 48px; border-radius: var(--r-sm);
+  object-fit: cover; background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; flex-shrink: 0; overflow:hidden;
+}
+.citem-thumb img { width:100%;height:100%;object-fit:cover; }
+.citem-info { flex: 1; }
+.citem-name { font-size: 13px; font-weight: 600; }
+.citem-price { font-size: 13px; font-weight: 700; color: var(--primary); margin-top: 2px; }
+.qty-ctrl { display: flex; align-items: center; gap: 7px; }
+.qbtn {
+  width: 27px; height: 27px; border-radius: 50%;
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 16px; color: var(--text-1);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.qbtn:hover { border-color: var(--primary); color: var(--primary); }
+.qnum { font-size: 14px; font-weight: 700; min-width: 18px; text-align: center; }
+.cart-foot { border-top: 1px solid var(--border); padding-top: 14px; }
+.srow {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 13.5px; margin-bottom: 7px;
+}
+.srow .lbl { color: var(--text-2); }
+.srow.total { font-size: 17px; font-weight: 800; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--border); }
+.srow.total .lbl { color: var(--text-1); }
+
+/* ===========================
+   BUTTONS
+=========================== */
+.btn { display:block; width:100%; border:none; border-radius:var(--r-md); font-size:15px; font-weight:700; padding:14px; transition:all .2s; text-align:center; }
+.btn-g { background:var(--primary); color:#fff; margin-top:13px; }
+.btn-g:hover { background:var(--primary-mid); }
+.btn-g:active { transform:scale(.98); }
+.btn-o { background:transparent; color:var(--text-2); border:1.5px solid var(--border); margin-top:8px; }
+.btn-o:hover { border-color:var(--primary); color:var(--primary); }
+.btn-wa { background:#25D366; color:#fff; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; }
+.btn-wa:hover { opacity:.9; }
+.btn-wa2 { background:#128C7E; color:#fff; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; }
+.btn-wa2:hover { opacity:.9; }
+
+/* ===========================
+   CHECKOUT MODAL
+=========================== */
+.mover {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,.42); backdrop-filter: blur(3px);
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity .28s;
+}
+.mover.on { opacity: 1; pointer-events: all; }
+@media(min-width:600px){ .mover{ align-items:center; } }
+.modal {
+  background: var(--surface);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  width: 100%; max-height: 90vh; overflow-y: auto;
+  padding: 24px 20px 32px;
+  transform: translateY(40px);
+  transition: transform .32s cubic-bezier(.32,.72,0,1);
+}
+.mover.on .modal { transform: translateY(0); }
+@media(min-width:600px){
+  .modal { border-radius:var(--r-xl); max-width:520px; max-height:86vh; }
+}
+.modal-title { font-size:18px; font-weight:800; margin-bottom:20px; text-align:center; }
+.fgrp { margin-bottom: 15px; }
+.flbl { display:block; font-size:12px; font-weight:700; color:var(--text-2); margin-bottom:5px; letter-spacing:.3px; text-transform:uppercase; }
+.finp, .fsel {
+  width:100%; padding:12px 13px;
+  border:1.5px solid var(--border); border-radius:var(--r-md);
+  font-size:14px; background:var(--bg); color:var(--text-1);
+  direction:rtl; outline:none; appearance:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+.finp:focus,.fsel:focus { border-color:var(--primary); box-shadow:0 0 0 3px rgba(26,92,56,.09); }
+.sel-wrap { position:relative; }
+.sel-wrap::after { content:'▾'; position:absolute; left:13px; top:50%; transform:translateY(-50%); color:var(--text-3); pointer-events:none; font-size:13px; }
+.loc-btn {
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  width:100%; padding:12px; cursor:pointer;
+  border:1.5px solid var(--primary); border-radius:var(--r-md);
+  background:var(--primary-light); color:var(--primary);
+  font-size:13.5px; font-weight:600;
+  transition:all .2s;
+}
+.loc-btn:hover { background:var(--primary); color:#fff; }
+.loc-ok {
+  margin-top:7px; padding:9px 12px;
+  background:#E8F5EC; border-radius:var(--r-sm);
+  font-size:12px; color:#1A5C38; font-weight:500;
+  display:none;
+}
+.loc-ok.on { display:block; }
+.pay-opts { display:flex; flex-direction:column; gap:9px; }
+.popt { position:relative; }
+.popt input[type=radio] { position:absolute; opacity:0; width:0; height:0; }
+.popt label {
+  display:flex; align-items:center; gap:10px;
+  padding:12px 14px; border:1.5px solid var(--border);
+  border-radius:var(--r-md); cursor:pointer;
+  font-size:13.5px; font-weight:500;
+  transition:all .2s;
+}
+.popt input:checked+label { border-color:var(--primary); background:var(--primary-light); color:var(--primary); font-weight:700; }
+.rdot {
+  width:17px; height:17px; border-radius:50%;
+  border:2px solid var(--border-mid); flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  transition:border-color .2s;
+}
+.popt input:checked+label .rdot { border-color:var(--primary); }
+.rdot::after { content:''; display:none; width:8px; height:8px; background:var(--primary); border-radius:50%; }
+.popt input:checked+label .rdot::after { display:block; }
+.cliq-box {
+  margin-top:10px; padding:14px;
+  background:var(--gold-light); border:1px solid #E8D89A;
+  border-radius:var(--r-md); display:none;
+}
+.cliq-box.on { display:block; }
+.cliq-box p { font-size:12.5px; color:#7A5C1E; font-weight:500; line-height:1.6; }
+.cliq-num { font-size:18px; font-weight:800; color:#5A3E10; margin-top:5px; direction:ltr; text-align:center; }
+.ck-sum { border-top:1px solid var(--border); padding-top:13px; margin-top:4px; }
+
+/* success */
+.ok-scr { text-align:center; padding:10px 0; }
+.ok-ico { font-size:60px; margin-bottom:10px; }
+.ok-ttl { font-size:21px; font-weight:800; color:var(--primary); margin-bottom:6px; }
+.ok-sub { font-size:13.5px; color:var(--text-2); line-height:1.7; }
+
+/* ===========================
+   PASS MODAL
+=========================== */
+.pover {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,.48); backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center;
+}
+.pover.on { display:flex; }
+.pcard {
+  background:var(--surface); padding:28px 24px;
+  border-radius:var(--r-xl); width:300px; text-align:center;
+  box-shadow:var(--sh-lg);
+}
+.pico { font-size:34px; margin-bottom:8px; }
+.ptitle { font-size:15px; font-weight:700; margin-bottom:15px; }
+.pinp {
+  width:100%; padding:12px 14px;
+  border:1.5px solid var(--border); border-radius:var(--r-md);
+  font-size:20px; text-align:center; letter-spacing:5px;
+  direction:ltr; outline:none; margin-bottom:10px;
+  transition:border-color .2s;
+}
+.pinp:focus { border-color:var(--primary); }
+.perr { color:var(--danger); font-size:12px; margin-bottom:8px; display:none; }
+.perr.on { display:block; }
+
+/* ===========================
+   ADMIN PANEL
+=========================== */
+.aover {
+  position:fixed; inset:0; z-index:600;
+  background:rgba(0,0,0,.46); backdrop-filter:blur(3px);
+  display:none; align-items:center; justify-content:center;
+  padding:16px;
+}
+.aover.on { display:flex; }
+.apanel {
+  background:var(--bg); width:100%; max-width:700px;
+  max-height:90vh; border-radius:var(--r-xl);
+  overflow:hidden; display:flex; flex-direction:column;
+  box-shadow:var(--sh-lg);
+}
+.ahdr {
+  background:var(--primary); color:#fff;
+  padding:16px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  flex-shrink:0;
+}
+.ahdr-title { font-size:15.5px; font-weight:700; }
+.ahdr-close {
+  background:rgba(255,255,255,.18); border:none; color:#fff;
+  width:30px; height:30px; border-radius:50%;
+  font-size:15px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s;
+}
+.ahdr-close:hover { background:rgba(255,255,255,.3); }
+.abody { overflow-y:auto; flex:1; padding:18px; }
+.asec {
+  background:var(--surface); border-radius:var(--r-md);
+  border:1px solid var(--border); padding:16px;
+  margin-bottom:14px; box-shadow:var(--sh-xs);
+}
+.asec-title {
+  font-size:13.5px; font-weight:700; color:var(--primary);
+  margin-bottom:14px; display:flex; align-items:center; gap:6px;
+}
+.af { margin-bottom:11px; }
+.aflbl { display:block; font-size:11.5px; font-weight:700; color:var(--text-2); margin-bottom:4px; letter-spacing:.2px; text-transform:uppercase; }
+.ainp,.asel {
+  width:100%; padding:10px 12px;
+  border:1.5px solid var(--border); border-radius:var(--r-sm);
+  font-size:13.5px; background:var(--bg); direction:rtl;
+  outline:none; color:var(--text-1);
+  transition:border-color .2s;
+}
+.ainp:focus,.asel:focus { border-color:var(--primary); }
+.asave {
+  padding:10px 18px; background:var(--primary); color:#fff;
+  border:none; border-radius:var(--r-sm);
+  font-size:13.5px; font-weight:700; margin-top:6px;
+  transition:background .2s;
+}
+.asave:hover { background:var(--primary-mid); }
+.img-zone {
+  border:2px dashed var(--border-mid); border-radius:var(--r-md);
+  padding:18px; text-align:center; cursor:pointer;
+  transition:border-color .2s; position:relative;
+  background:var(--surface-2);
+}
+.img-zone:hover { border-color:var(--primary); }
+.img-zone input[type=file] {
+  position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%;
+}
+.img-prev { width:72px; height:72px; object-fit:cover; border-radius:var(--r-sm); margin:0 auto 8px; display:none; }
+.img-prev.on { display:block; }
+.img-zone-lbl { font-size:12.5px; color:var(--text-3); }
+.img-zone-ico { font-size:22px; margin-bottom:5px; }
+.agrid { display:grid; gap:10px; }
+@media(min-width:500px){ .agrid { grid-template-columns:1fr 1fr; } }
+.pub-btn {
+  display:block; width:100%; padding:15px;
+  background:linear-gradient(135deg, var(--primary) 0%, var(--primary-mid) 100%);
+  color:#fff; border:none; border-radius:var(--r-md);
+  font-size:15px; font-weight:800;
+  transition:opacity .2s, transform .15s;
+}
+.pub-btn:hover { opacity:.9; }
+.pub-btn:active { transform:scale(.98); }
+.pub-st { margin-top:9px; font-size:13px; text-align:center; color:var(--text-2); min-height:20px; }
+.tbl { width:100%; border-collapse:collapse; font-size:12.5px; }
+.tbl th { text-align:right; padding:9px 10px; background:var(--bg); font-weight:700; color:var(--text-2); border-bottom:1px solid var(--border); font-size:11px; text-transform:uppercase; letter-spacing:.3px; }
+.tbl td { padding:9px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+.tbl tr:last-child td { border-bottom:none; }
+.tbl-thumb { width:34px; height:34px; border-radius:6px; object-fit:cover; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:18px; }
+.tbl-thumb img { width:34px; height:34px; border-radius:6px; object-fit:cover; }
+.del-btn {
+  padding:4px 10px; background:var(--danger-light);
+  border:1px solid #F4BFBB; color:var(--danger);
+  border-radius:var(--r-xs); font-size:11.5px; font-weight:700;
+  transition:all .2s;
+}
+.del-btn:hover { background:var(--danger); color:#fff; border-color:var(--danger); }
+.tbl-wrap { overflow-x:auto; border-radius:var(--r-sm); }
+
+/* ===========================
+   FOOTER
+=========================== */
+.foot {
+  text-align:center; padding:26px 16px;
+  border-top:1px solid var(--border);
+  color:var(--text-3); font-size:11.5px;
+  cursor:default; user-select:none; line-height:1.8;
+}
+.foot strong { color:var(--text-2); }
+
+/* ===========================
+   TOAST
+=========================== */
+.toast {
+  position:fixed; bottom:22px; left:50%;
+  transform:translateX(-50%) translateY(70px);
+  background:#1A1A1A; color:#fff;
+  padding:11px 20px; border-radius:50px;
+  font-size:13px; font-weight:500;
+  z-index:900; white-space:nowrap;
+  opacity:0; transition:transform .28s, opacity .28s;
+  pointer-events:none;
+}
+.toast.on { transform:translateX(-50%) translateY(0); opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HEADER
+══════════════════════════════ -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="logo">
+      <div class="logo-name"><span>🛒</span> محلات البداية</div>
+      <div class="logo-tag">جملة ومفرق · كل ما يلزم المستهلك</div>
+    </div>
+    <div class="status-pill">
+      <div class="dot"></div>
+      <span class="status-label">مفتوح الآن</span>
+    </div>
+    <button class="cart-btn" id="cartBtn" onclick="openCart()" aria-label="سلة المشتريات">
+      <span class="cart-icon">🛍️</span>
+      <span class="badge" id="badge">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     MAIN
+══════════════════════════════ -->
+<div class="main">
+  <!-- Search -->
+  <div class="search-wrap">
+    <span class="search-ico">🔍</span>
+    <input class="search-inp" type="search" id="searchInp" placeholder="ابحث عن منتج..." oninput="filterP()" autocomplete="off" />
+  </div>
+
+  <!-- Categories -->
+  <div class="cats" id="cats">
+    <button class="cat-btn on" onclick="setCat('all',this)">الكل</button>
+    <button class="cat-btn" onclick="setCat('مواد تموينية',this)">🥫 تموين</button>
+    <button class="cat-btn" onclick="setCat('سكاكر',this)">🍬 سكاكر</button>
+    <button class="cat-btn" onclick="setCat('مشروبات ساخنة',this)">☕ مشروبات</button>
+    <button class="cat-btn" onclick="setCat('عصائر',this)">🥤 عصائر</button>
+    <button class="cat-btn" onclick="setCat('دخان',this)">🚬 دخان</button>
+    <button class="cat-btn" onclick="setCat('بطاقات شحن',this)">📱 شحن</button>
+  </div>
+
+  <div class="sec-title" id="secTitle">جميع المنتجات</div>
+
+  <!-- Products Grid -->
+  <div class="grid" id="grid">
+    <div class="spin-wrap"><div class="spinner"></div><p style="margin-top:12px;color:var(--text-3);font-size:13px">جاري التحميل…</p></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     FOOTER (Admin Trigger)
+══════════════════════════════ -->
+<footer class="foot" id="foot">
+  <div>📍 <strong>القويرة</strong> — بجانب صالة الأفراح الجديدة</div>
+  <div>© 2025 محلات البداية · جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- ══════════════════════════════
+     CART DRAWER
+══════════════════════════════ -->
+<div class="ov" id="cartOv" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-handle"></div>
+  <div class="drawer-title">سلة المشتريات 🛍️</div>
+  <div class="cart-list" id="cartList"></div>
+  <div class="cart-foot" id="cartFoot">
+    <div class="srow"><span class="lbl">المجموع</span><span id="cartSub">0.000 د.أ</span></div>
+    <div class="srow total"><span class="lbl">الإجمالي</span><span id="cartTot" style="color:var(--primary)">0.000 د.أ</span></div>
+  </div>
+  <button class="btn btn-g" onclick="openCheckout()">إتمام الطلب ←</button>
+  <button class="btn btn-o" onclick="closeCart()">متابعة التسوق</button>
+</div>
+
+<!-- ══════════════════════════════
+     CHECKOUT MODAL
+══════════════════════════════ -->
+<div class="mover" id="mover">
+  <div class="modal" id="modal">
+
+    <!-- Step 1: form -->
+    <div id="ckStep1">
+      <div class="modal-title">تفاصيل الطلب 📋</div>
+
+      <!-- Area -->
+      <div class="fgrp">
+        <label class="flbl">منطقة السكن</label>
+        <div class="sel-wrap">
+          <select class="fsel" id="areaS" onchange="updDelivery()">
+            <option value="" disabled selected>اختر منطقتك…</option>
+            <option value="القويرة|1.25">القويرة &nbsp;—&nbsp; توصيل 1.250 د.أ</option>
+            <option value="الشهيبي|2.00">الشهيبي &nbsp;—&nbsp; توصيل 2.000 د.أ</option>
+            <option value="الحميمة|3.00">الحميمة &nbsp;—&nbsp; توصيل 3.000 د.أ</option>
+            <option value="الراشدية|3.00">الراشدية &nbsp;—&nbsp; توصيل 3.000 د.أ</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="fgrp">
+        <label class="flbl">الموقع الجغرافي</label>
+        <button class="loc-btn" id="locBtn" onclick="getGPS()" type="button">
+          <span>📍</span> تحديد موقعي عبر خرائط جوجل
+        </button>
+        <div class="loc-ok" id="locOk">✅ تم تحديد موقعك — <a id="locLink" href="#" target="_blank" style="color:var(--primary);font-weight:600">عرض على الخريطة</a></div>
+      </div>
+
+      <!-- Phone -->
+      <div class="fgrp">
+        <label class="flbl">رقم الهاتف</label>
+        <input class="finp" type="tel" id="phoneInp" placeholder="07XXXXXXXX" dir="ltr" />
+      </div>
+
+      <!-- Payment -->
+      <div class="fgrp">
+        <label class="flbl">طريقة الدفع</label>
+        <div class="pay-opts">
+          <div class="popt">
+            <input type="radio" name="pay" id="payCOD" value="cod" checked onchange="togCliq()">
+            <label for="payCOD"><span class="rdot"></span> 💵 الدفع عند التوصيل</label>
+          </div>
+          <div class="popt">
+            <input type="radio" name="pay" id="payCliq" value="cliq" onchange="togCliq()">
+            <label for="payCliq"><span class="rdot"></span> 📱 الدفع عبر CliQ كليك</label>
+          </div>
+        </div>
+        <div class="cliq-box" id="cliqBox">
+          <p>يرجى التحويل إلى رقم كليك التالي:</p>
+          <div class="cliq-num" id="cliqNum">—</div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="ck-sum">
+        <div class="srow"><span class="lbl">المنتجات</span><span id="ckSub">0.000 د.أ</span></div>
+        <div class="srow"><span class="lbl">التوصيل</span><span id="ckDel">—</span></div>
+        <div class="srow total"><span>الإجمالي الكلي</span><span id="ckTot" style="color:var(--primary)">0.000 د.أ</span></div>
+      </div>
+
+      <button class="btn btn-g" onclick="submitOrder()">تأكيد وإرسال الطلب 🚀</button>
+      <button class="btn btn-o" onclick="closeCk()">رجوع</button>
+    </div>
+
+    <!-- Step 2: success -->
+    <div id="ckOK" style="display:none">
+      <div class="ok-scr">
+        <div class="ok-ico">✅</div>
+        <div class="ok-ttl">تم استلام طلبك!</div>
+        <div class="ok-sub">أرسل طلبك للمحل وكابتن التوصيل عبر الواتساب</div>
+        <a id="waStore" href="#" target="_blank" class="btn btn-wa">📦 إرسال للمحل (تجهيز الطلب)</a>
+        <a id="waDriver" href="#" target="_blank" class="btn btn-wa2">🚗 إرسال لكابتن التوصيل</a>
+        <button class="btn btn-o" onclick="finishOrder()" style="margin-top:16px">إغلاق وطلب جديد 🔁</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     PASSWORD MODAL
+══════════════════════════════ -->
+<div class="pover" id="pover">
+  <div class="pcard">
+    <div class="pico">🔐</div>
+    <div class="ptitle">لوحة الإدارة المحمية</div>
+    <input class="pinp" type="password" id="pinp" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter')chkPass()" autocomplete="off" />
+    <div class="perr" id="perr">كلمة المرور خاطئة ❌</div>
+    <button class="btn btn-g" onclick="chkPass()">دخول</button>
+    <button class="btn btn-o" onclick="closePover()">إلغاء</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     ADMIN PANEL
+══════════════════════════════ -->
+<div class="aover" id="aover">
+  <div class="apanel">
+    <div class="ahdr">
+      <span class="ahdr-title">🛠️ لوحة التحكم — محلات البداية</span>
+      <button class="ahdr-close" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="abody">
+
+      <!-- Settings -->
+      <div class="asec">
+        <div class="asec-title">⚙️ إعدادات المتجر</div>
+        <div class="agrid">
+          <div class="af">
+            <label class="aflbl">واتساب مجهز الطلبات</label>
+            <input class="ainp" type="text" id="aStoreWA" placeholder="962XXXXXXXXX" dir="ltr" />
+          </div>
+          <div class="af">
+            <label class="aflbl">واتساب كابتن الدليفري</label>
+            <input class="ainp" type="text" id="aDriverWA" placeholder="962XXXXXXXXX" dir="ltr" />
+          </div>
+          <div class="af" style="grid-column:1/-1">
+            <label class="aflbl">رقم CliQ كليك الخاص بالمحل</label>
+            <input class="ainp" type="text" id="aCliq" placeholder="رقم الجوال أو رقم الآيبان" dir="ltr" />
+          </div>
+        </div>
+        <button class="asave" onclick="saveSettings()">💾 حفظ الإعدادات</button>
+      </div>
+
+      <!-- Add Product -->
+      <div class="asec">
+        <div class="asec-title">➕ إضافة منتج جديد</div>
+        <div class="agrid">
+          <div class="af">
+            <label class="aflbl">اسم المنتج</label>
+            <input class="ainp" type="text" id="nName" placeholder="مثال: رز عنبر مصري 5 كغ" />
+          </div>
+          <div class="af">
+            <label class="aflbl">القسم</label>
+            <select class="asel" id="nCat">
+              <option value="مواد تموينية">مواد تموينية</option>
+              <option value="سكاكر">سكاكر</option>
+              <option value="مشروبات ساخنة">مشروبات ساخنة</option>
+              <option value="عصائر">عصائر</option>
+              <option value="دخان">دخان</option>
+              <option value="بطاقات شحن">بطاقات شحن</option>
+            </select>
+          </div>
+          <div class="af">
+            <label class="aflbl">السعر (د.أ)</label>
+            <input class="ainp" type="number" id="nPrice" placeholder="0.000" step="0.001" min="0" dir="ltr" />
+          </div>
+          <div class="af">
+            <label class="aflbl">الوزن / الحجم (اختياري)</label>
+            <input class="ainp" type="text" id="nWt" placeholder="مثال: 5 كغ، 1 لتر" />
+          </div>
+          <div class="af" style="grid-column:1/-1">
+            <label class="aflbl">صورة المنتج</label>
+            <div class="img-zone" id="imgZone">
+              <input type="file" id="imgFile" accept="image/*" onchange="prevImg()" />
+              <img id="imgPrev" class="img-prev" alt="معاينة" />
+              <div id="imgLbl">
+                <div class="img-zone-ico">📷</div>
+                <div class="img-zone-lbl">انقر لرفع صورة من الجهاز</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="asave" onclick="addProduct()">➕ إضافة المنتج</button>
+      </div>
+
+      <!-- Products Table -->
+      <div class="asec">
+        <div class="asec-title">📦 المنتجات الحالية (<span id="prodCount">0</span>)</div>
+        <div class="tbl-wrap">
+          <table class="tbl" id="aTbl">
+            <thead>
+              <tr>
+                <th>الصورة</th>
+                <th>الاسم</th>
+                <th>القسم</th>
+                <th>السعر</th>
+                <th>إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="aTbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Publish -->
+      <div class="asec">
+        <div class="asec-title">🚀 النشر السحابي على GitHub</div>
+        <button class="pub-btn" onclick="publishData()">🔄 تحديث ونشر بيانات السوبرماركت فوراً</button>
+        <div class="pub-st" id="pubSt"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ══════════════════════════════
+     JAVASCRIPT
+══════════════════════════════ -->
+<script>
+/* ───────────────────────────────────────
+   CONFIG
+─────────────────────────────────────── */
+const GITHUB_USERNAME = "greatmohammad2006-lab";
+const GITHUB_REPO     = "jahezjo-platform";
+const GITHUB_TOKEN    = "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";
+const DATABASE_FILE   = "market_data.json";
+const MASTER_PASS     = "M7md@3li";
+
+/* ───────────────────────────────────────
+   STATE
+─────────────────────────────────────── */
+let products = [];
+let cart     = [];
+let activeCat = 'all';
+let fileSHA   = '';
+let locURL    = '';
+let newImgB64 = '';
+
+let settings = {
+  storeWA:  '962790000000',
+  driverWA: '962790000001',
+  cliqNum:  '07XXXXXXXX'
+};
+
+/* ───────────────────────────────────────
+   CAT EMOJI MAP
+─────────────────────────────────────── */
+const EMO = {
+  'مواد تموينية': '🥫',
+  'سكاكر':        '🍬',
+  'مشروبات ساخنة':'☕',
+  'عصائر':        '🥤',
+  'دخان':         '🚬',
+  'بطاقات شحن':  '📱'
+};
+
+/* ───────────────────────────────────────
+   INIT
+─────────────────────────────────────── */
+(async function init(){
+  await loadCloud();
+  renderGrid();
+  initFooterTrigger();
+})();
+
+/* ───────────────────────────────────────
+   CLOUD LOAD
+─────────────────────────────────────── */
+async function loadCloud(){
+  try {
+    const url = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATABASE_FILE}`;
+    const r = await fetch(url,{
+      headers:{
+        'Authorization':`token ${GITHUB_TOKEN}`,
+        'Accept':'application/vnd.github.v3+json'
+      }
+    });
+    if(!r.ok) throw new Error('not found');
+    const d = await r.json();
+    fileSHA = d.sha;
+    const raw = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    products = raw.products || [];
+    if(raw.settings) settings = {...settings,...raw.settings};
+    document.getElementById('cliqNum').textContent = settings.cliqNum || '—';
+  } catch(e){
+    products = defaultProducts();
+  }
+}
+
+function defaultProducts(){
+  return [
+    {id:1, name:'رز عنبر مصري',    category:'مواد تموينية', price:3.500, weight:'5 كغ',    img:''},
+    {id:2, name:'زيت نباتي ذهبي',  category:'مواد تموينية', price:2.750, weight:'1.8 لتر', img:''},
+    {id:3, name:'سكر أبيض',         category:'مواد تموينية', price:1.800, weight:'2 كغ',    img:''},
+    {id:4, name:'شاي ليبتون أصفر',  category:'مشروبات ساخنة',price:1.200, weight:'100 كيس', img:''},
+    {id:5, name:'نسكافيه كلاسيك',   category:'مشروبات ساخنة',price:2.500, weight:'200 غم',  img:''},
+    {id:6, name:'عصير تانج برتقال', category:'عصائر',        price:0.750, weight:'2 لتر',   img:''},
+    {id:7, name:'كيت كات',           category:'سكاكر',        price:0.350, weight:'45 غم',   img:''},
+    {id:8, name:'سنكرز',             category:'سكاكر',        price:0.400, weight:'52 غم',   img:''},
+  ];
+}
+
+/* ───────────────────────────────────────
+   RENDER PRODUCTS
+─────────────────────────────────────── */
+function renderGrid(){
+  const grid  = document.getElementById('grid');
+  const q     = document.getElementById('searchInp').value.trim().toLowerCase();
+  const list  = products.filter(p=>{
+    const mc = activeCat === 'all' || p.category === activeCat;
+    const ms = !q || p.name.toLowerCase().includes(q) || p.category.includes(q);
+    return mc && ms;
+  });
+
+  if(!list.length){
+    grid.innerHTML = `<div class="empty"><div class="empty-ico">${q?'🔍':'📦'}</div><div class="empty-txt">لا توجد منتجات${q?' تطابق البحث':' في هذا القسم'}</div></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map(p=>`
+    <div class="pcard">
+      ${p.img
+        ? `<img class="pcard-img" src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="pcard-placeholder" style="display:none">${EMO[p.category]||'📦'}</div>`
+        : `<div class="pcard-placeholder">${EMO[p.category]||'📦'}</div>`
+      }
+      <div class="pcard-body">
+        <div class="pcard-name">${p.name}</div>
+        ${p.weight?`<div class="pcard-wt">${p.weight}</div>`:''}
+        <div class="pcard-foot">
+          <div class="pcard-price">${Number(p.price).toFixed(3)}<sub> د.أ</sub></div>
+          <button class="add-btn" onclick="addToCart(${p.id})" aria-label="إضافة للسلة">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterP(){ renderGrid(); }
+
+function setCat(cat, btn){
+  activeCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('secTitle').textContent =
+    cat === 'all' ? 'جميع المنتجات' : (EMO[cat]||'') + ' ' + cat;
+  renderGrid();
+}
+
+/* ───────────────────────────────────────
+   CART
+─────────────────────────────────────── */
+function addToCart(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const ex = cart.find(x=>x.id===id);
+  ex ? ex.qty++ : cart.push({...p, qty:1});
+  refreshBadge();
+  popCart();
+  toast(`✅ ${p.name} — تمت الإضافة`);
+}
+
+function refreshBadge(){
+  const n = cart.reduce((s,i)=>s+i.qty,0);
+  const b = document.getElementById('badge');
+  b.textContent = n;
+  b.style.display = n ? 'flex' : 'none';
+}
+
+function popCart(){
+  const btn = document.getElementById('cartBtn');
+  btn.classList.remove('popped');
+  void btn.offsetWidth;
+  btn.classList.add('popped');
+  setTimeout(()=>btn.classList.remove('popped'),550);
+}
+
+function openCart(){
+  if(!cart.length){ toast('🛒 السلة فارغة — أضف منتجات أولاً'); return; }
+  renderDrawer();
+  document.getElementById('cartOv').classList.add('on');
+  document.getElementById('drawer').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart(){
+  document.getElementById('cartOv').classList.remove('on');
+  document.getElementById('drawer').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+function renderDrawer(){
+  const list = document.getElementById('cartList');
+  list.innerHTML = cart.map(it=>`
+    <div class="citem">
+      <div class="citem-thumb">
+        ${it.img ? `<img src="${it.img}" alt="${it.name}" />` : (EMO[it.category]||'📦')}
+      </div>
+      <div class="citem-info">
+        <div class="citem-name">${it.name}</div>
+        <div class="citem-price">${(it.price*it.qty).toFixed(3)} د.أ</div>
+      </div>
+      <div class="qty-ctrl">
+        <button class="qbtn" onclick="chgQty(${it.id},-1)">−</button>
+        <span class="qnum">${it.qty}</span>
+        <button class="qbtn" onclick="chgQty(${it.id},1)">+</button>
+      </div>
+    </div>
+  `).join('');
+  const sub = subtotal();
+  document.getElementById('cartSub').textContent = sub.toFixed(3)+' د.أ';
+  document.getElementById('cartTot').textContent = sub.toFixed(3)+' د.أ';
+}
+
+function chgQty(id, d){
+  const it = cart.find(x=>x.id===id);
+  if(!it) return;
+  it.qty += d;
+  if(it.qty<=0) cart = cart.filter(x=>x.id!==id);
+  refreshBadge();
+  renderDrawer();
+  if(!cart.length) closeCart();
+}
+
+function subtotal(){ return cart.reduce((s,i)=>s+(i.price*i.qty),0); }
+
+/* ───────────────────────────────────────
+   CHECKOUT
+─────────────────────────────────────── */
+function openCheckout(){
+  closeCart();
+  updDelivery();
+  document.getElementById('ckStep1').style.display = 'block';
+  document.getElementById('ckOK').style.display    = 'none';
+  document.getElementById('mover').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCk(){
+  document.getElementById('mover').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+function updDelivery(){
+  const sub = subtotal();
+  const fee = delivFee();
+  document.getElementById('ckSub').textContent = sub.toFixed(3)+' د.أ';
+  document.getElementById('ckDel').textContent = fee>0 ? fee.toFixed(3)+' د.أ' : '—';
+  document.getElementById('ckTot').textContent = (sub+fee).toFixed(3)+' د.أ';
+}
+
+function delivFee(){
+  const v = document.getElementById('areaS').value;
+  return v ? parseFloat(v.split('|')[1])||0 : 0;
+}
+
+function areaName(){
+  const v = document.getElementById('areaS').value;
+  return v ? v.split('|')[0] : '';
+}
+
+function togCliq(){
+  const on = document.getElementById('payCliq').checked;
+  document.getElementById('cliqBox').classList.toggle('on', on);
+}
+
+function getGPS(){
+  const btn = document.getElementById('locBtn');
+  btn.innerHTML = '⏳ جاري التحديد…';
+  btn.disabled = true;
+  if(!navigator.geolocation){
+    toast('⚠️ المتصفح لا يدعم تحديد الموقع');
+    btn.innerHTML = '📍 تحديد موقعي عبر خرائط جوجل';
+    btn.disabled = false; return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      const lat=pos.coords.latitude, lng=pos.coords.longitude;
+      locURL = `https://www.google.com/maps?q=${lat},${lng}`;
+      document.getElementById('locOk').classList.add('on');
+      document.getElementById('locLink').href = locURL;
+      btn.innerHTML = '✅ تم تحديد الموقع';
+      btn.disabled = false;
+    },
+    ()=>{
+      toast('⚠️ تعذّر تحديد الموقع — يمكنك المتابعة بدونه');
+      btn.innerHTML = '📍 تحديد موقعي عبر خرائط جوجل';
+      btn.disabled = false;
+    },
+    {enableHighAccuracy:true, timeout:12000}
+  );
+}
+
+function submitOrder(){
+  const area  = areaName();
+  const phone = document.getElementById('phoneInp').value.trim();
+  const pay   = document.querySelector('input[name=pay]:checked').value;
+
+  if(!area)  { toast('⚠️ يرجى اختيار منطقة السكن'); return; }
+  if(!phone) { toast('⚠️ يرجى إدخال رقم الهاتف');   return; }
+
+  const sub     = subtotal();
+  const fee     = delivFee();
+  const total   = (sub+fee).toFixed(3);
+  const payTxt  = pay==='cod' ? 'الدفع عند التوصيل 💵' : `كليك CliQ 📱 (${settings.cliqNum})`;
+  const mapLine = locURL ? `\n🗺️ موقع الزبون: ${locURL}` : '';
+
+  // Cart lines
+  const lines = cart.map(i=>`• ${i.name} × ${i.qty} = ${(i.price*i.qty).toFixed(3)} د.أ`).join('\n');
+
+  // MSG 1 → Store
+  const m1 =
+`🛒 *طلب جديد — محلات البداية*
+━━━━━━━━━━━━━━━━━
+${lines}
+━━━━━━━━━━━━━━━━━
+📦 مجموع المنتجات : ${sub.toFixed(3)} د.أ
+🚗 رسوم التوصيل  : ${fee.toFixed(3)} د.أ
+💰 *الإجمالي الكلي : ${total} د.أ*
+💳 الدفع          : ${payTxt}
+📍 المنطقة        : ${area}
+📞 هاتف الزبون    : ${phone}${mapLine}`;
+
+  // MSG 2 → Driver
+  const m2 =
+`🚗 *مرحباً كابتن،*
+يوجد طلب جديد جاهز للتوصيل من محلات البداية إلى منطقة *${area}*.
+يرجى التوجه للمحل في غضون 10 دقائق لاستلام الطلب وتوصيله.${locURL?`\n🗺️ رابط موقع الزبون: ${locURL}`:''}`;
+
+  const sw = settings.storeWA  || '962XXXXXXXXX';
+  const dw = settings.driverWA || '962XXXXXXXXX';
+
+  document.getElementById('waStore').href  = `https://wa.me/${sw}?text=${encodeURIComponent(m1)}`;
+  document.getElementById('waDriver').href = `https://wa.me/${dw}?text=${encodeURIComponent(m2)}`;
+
+  document.getElementById('ckStep1').style.display = 'none';
+  document.getElementById('ckOK').style.display    = 'block';
+}
+
+function finishOrder(){
+  cart = [];
+  refreshBadge();
+  locURL = '';
+  document.getElementById('areaS').value = '';
+  document.getElementById('phoneInp').value = '';
+  document.getElementById('locOk').classList.remove('on');
+  document.getElementById('locBtn').innerHTML = '📍 تحديد موقعي عبر خرائط جوجل';
+  document.getElementById('locBtn').disabled = false;
+  document.getElementById('payCOD').checked = true;
+  document.getElementById('cliqBox').classList.remove('on');
+  closeCk();
+}
+
+/* ───────────────────────────────────────
+   ADMIN — FOOTER TRIGGER
+─────────────────────────────────────── */
+let clicks = 0, longT = null;
+
+function initFooterTrigger(){
+  const f = document.getElementById('foot');
+
+  f.addEventListener('click',()=>{
+    clicks++;
+    if(clicks>=3){ clicks=0; openPover(); }
+    clearTimeout(window._rstClk);
+    window._rstClk = setTimeout(()=>{ clicks=0; },1400);
+  });
+
+  f.addEventListener('touchstart',()=>{ longT = setTimeout(openPover,2000); },{passive:true});
+  f.addEventListener('touchend',()=>  clearTimeout(longT));
+  f.addEventListener('mousedown',()=> longT = setTimeout(openPover,2000));
+  f.addEventListener('mouseup',()=>   clearTimeout(longT));
+}
+
+/* ───────────────────────────────────────
+   PASS MODAL
+─────────────────────────────────────── */
+function openPover(){
+  document.getElementById('pinp').value = '';
+  document.getElementById('perr').classList.remove('on');
+  document.getElementById('pover').classList.add('on');
+  setTimeout(()=>document.getElementById('pinp').focus(),120);
+}
+
+function closePover(){
+  document.getElementById('pover').classList.remove('on');
+}
+
+function chkPass(){
+  if(document.getElementById('pinp').value === MASTER_PASS){
+    closePover();
+    openAdmin();
+  } else {
+    document.getElementById('perr').classList.add('on');
+    document.getElementById('pinp').value = '';
+    document.getElementById('pinp').focus();
+  }
+}
+
+/* ───────────────────────────────────────
+   ADMIN PANEL
+─────────────────────────────────────── */
+function openAdmin(){
+  document.getElementById('aStoreWA').value  = settings.storeWA  || '';
+  document.getElementById('aDriverWA').value = settings.driverWA || '';
+  document.getElementById('aCliq').value     = settings.cliqNum  || '';
+  renderAdminTable();
+  document.getElementById('aover').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAdmin(){
+  document.getElementById('aover').classList.remove('on');
+  document.body.style.overflow = '';
+}
+
+function saveSettings(){
+  settings.storeWA  = document.getElementById('aStoreWA').value.trim();
+  settings.driverWA = document.getElementById('aDriverWA').value.trim();
+  settings.cliqNum  = document.getElementById('aCliq').value.trim();
+  document.getElementById('cliqNum').textContent = settings.cliqNum || '—';
+  toast('✅ تم حفظ الإعدادات — لا تنس النشر السحابي');
+}
+
+function prevImg(){
+  const file = document.getElementById('imgFile').files[0];
+  if(!file) return;
+
+  // Compress image before storing as base64
+  const reader = new FileReader();
+  reader.onload = e=>{
+    const img = new Image();
+    img.onload = ()=>{
+      const MAX = 400;
+      let w = img.width, h = img.height;
+      if(w>h){ if(w>MAX){h=h*MAX/w;w=MAX;} } else { if(h>MAX){w=w*MAX/h;h=MAX;} }
+      const c = document.createElement('canvas');
+      c.width=w; c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      newImgB64 = c.toDataURL('image/jpeg',0.82);
+      const prev = document.getElementById('imgPrev');
+      prev.src = newImgB64;
+      prev.classList.add('on');
+      document.getElementById('imgLbl').style.display = 'none';
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function addProduct(){
+  const name  = document.getElementById('nName').value.trim();
+  const cat   = document.getElementById('nCat').value;
+  const price = parseFloat(document.getElementById('nPrice').value);
+  const wt    = document.getElementById('nWt').value.trim();
+
+  if(!name || isNaN(price) || price<=0){
+    toast('⚠️ يرجى تعبئة الاسم والسعر'); return;
+  }
+
+  products.push({id:Date.now(), name, category:cat, price, weight:wt, img:newImgB64});
+
+  // Reset form
+  document.getElementById('nName').value  = '';
+  document.getElementById('nPrice').value = '';
+  document.getElementById('nWt').value    = '';
+  document.getElementById('imgPrev').classList.remove('on');
+  document.getElementById('imgLbl').style.display = '';
+  document.getElementById('imgFile').value = '';
+  newImgB64 = '';
+
+  renderAdminTable();
+  renderGrid();
+  toast(`✅ تمت إضافة: ${name}`);
+}
+
+function deleteProduct(id){
+  if(!confirm('هل تريد حذف هذا المنتج نهائياً؟')) return;
+  products = products.filter(p=>p.id!==id);
+  renderAdminTable();
+  renderGrid();
+  toast('🗑️ تم حذف المنتج');
+}
+
+function renderAdminTable(){
+  document.getElementById('prodCount').textContent = products.length;
+  const tbody = document.getElementById('aTbody');
+  if(!products.length){
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--text-3);padding:20px">لا توجد منتجات مضافة بعد</td></tr>';
+    return;
+  }
+  tbody.innerHTML = products.map(p=>`
+    <tr>
+      <td>
+        <div class="tbl-thumb">
+          ${p.img ? `<img src="${p.img}" alt="${p.name}" />` : (EMO[p.category]||'📦')}
+        </div>
+      </td>
+      <td style="font-weight:600">${p.name}</td>
+      <td style="color:var(--text-2)">${p.category}</td>
+      <td style="font-weight:700;color:var(--primary)">${Number(p.price).toFixed(3)} د.أ</td>
+      <td><button class="del-btn" onclick="deleteProduct(${p.id})">❌ حذف</button></td>
+    </tr>
+  `).join('');
+}
+
+/* ───────────────────────────────────────
+   PUBLISH TO GITHUB
+─────────────────────────────────────── */
+async function publishData(){
+  const btn = document.querySelector('.pub-btn');
+  const st  = document.getElementById('pubSt');
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري الرفع إلى السيرفر السحابي…';
+  st.style.color = 'var(--text-2)';
+  st.textContent = '';
+
+  const payload = {
+    products,
+    settings,
+    lastUpdated: new Date().toISOString()
+  };
+
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload,null,2))));
+
+  try {
+    const url  = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents/${DATABASE_FILE}`;
+    const body = {
+      message: `📦 تحديث بيانات السوبرماركت — ${new Date().toLocaleString('ar-JO')}`,
+      content,
+      committer:{name:'Al-Bidaya Store', email:'store@albidaya.jo'}
+    };
+    if(fileSHA) body.sha = fileSHA;
+
+    const r = await fetch(url,{
+      method:'PUT',
+      headers:{
+        'Authorization':`token ${GITHUB_TOKEN}`,
+        'Content-Type':'application/json',
+        'Accept':'application/vnd.github.v3+json'
+      },
+      body: JSON.stringify(body)
+    });
+
+    const res = await r.json();
+    if(r.ok){
+      fileSHA = res.content?.sha || fileSHA;
+      st.textContent = '✅ تم النشر بنجاح على السيرفر السحابي!';
+      st.style.color = 'var(--success)';
+      toast('✅ نُشرت البيانات بنجاح!');
+    } else {
+      throw new Error(res.message || 'رمز الاستجابة: '+r.status);
+    }
+  } catch(e){
+    st.textContent = `❌ فشل النشر: ${e.message}`;
+    st.style.color = 'var(--danger)';
+    toast('❌ فشل النشر — تحقق من الاتصال');
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🔄 تحديث ونشر بيانات السوبرماركت فوراً';
+}
+
+/* ───────────────────────────────────────
+   TOAST
+─────────────────────────────────────── */
+let toastTmr = null;
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastTmr);
+  toastTmr = setTimeout(()=>t.classList.remove('on'),2800);
+}
+</script>
+</body>
+</html>
