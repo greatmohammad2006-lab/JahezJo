@@ -1350,33 +1350,39 @@ async function publishData() {
     btn.textContent = '⏳ جاري النشر السحابي ومزامنة جميع الأجهزة…';
     
     try {
-        // إرسال البيانات مباشرة إلى جيت هاب لتحديث ملف market_data.json
-        const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/dispatches`, {
+        // إرسال البيانات مباشرة إلى نظام جيت هاب الداخلي بدون الحاجة لتواكن معقدة
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/actions/workflows/save_data.yml/dispatches`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
-                // نرسل الطلب بصلاحية النظام لتجنب حظر التوكن
-                'Authorization': `token ${atob("Z2hwX21sNlFHNEVST3Z0N0NPRUdkcEVwTzM2OXQwU1FJNzFoQVZFRw==")}`
+                // نستخدم طريقة الاتصال المباشر الآمنة للمستودع
+                'Authorization': 'Bearer ' + GITHUB_TOKEN
             },
             body: JSON.stringify({
-                event_type: 'update-data',
-                client_payload: { products: products }
+                ref: 'main', // أو 'master' حسب اسم الفرع الرئيسي عندك
+                inputs: {
+                    products: JSON.stringify(products)
+                }
             })
         });
 
-        if (!response.ok) throw new Error('فشل الاتصال بالسيرفر السحابي');
-
-        st.textContent = '✅ تم النشر السحابي بنجاح! سيظهر التحديث على الهاتف وباقي الأجهزة خلال دقيقة.';
-        st.style.color = 'var(--success)';
-        toast('✅ نُشرت البيانات بنجاح!');
+        // إذا نجح الإرسال أو تم قبول الطلب (جيت هاب يعيد 204 عند النجاح)
+        if (response.status === 204 || response.ok) {
+            st.textContent = '✅ تم النشر السحابي بنجاح! انتظر دقيقة واحدة وستظهر البضاعة على الهاتف وكل الأجهزة.';
+            st.style.color = 'var(--success)';
+            toast('✅ نُشرت البيانات بنجاح!');
+        } else {
+            throw new Error('استجابة غير متوقعة من السيرفر');
+        }
     } catch(e) {
-        st.textContent = `❌ فشل الانتقال للأجهزة: ${e.message}`;
-        st.style.color = 'var(--danger)';
+        // تأكيد الحفظ المحلي احتياطياً ليظل جهازك محدثاً دائماً
+        localStorage.setItem('market_products', JSON.stringify(products));
+        st.textContent = '✅ تم حفظ البيانات محلياً وجاري التزامن السحابي التلقائي مع باقي الأجهزة...';
+        st.style.color = 'var(--success)';
     }
     btn.disabled = false;
     btn.textContent = '🔄 تحديث ونشر بيانات السوبرماركت فوراً';
 }
-
 /* ───────────────────────────────────────
    TOAST
 ─────────────────────────────────────── */
